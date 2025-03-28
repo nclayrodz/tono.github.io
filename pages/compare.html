@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparison Tool</title>
+    <link rel="stylesheet" href="..styles/compare.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">Tono</a>
+            <input type="checkbox" id="menu-toggle">
+            <label for="menu-toggle" class="menu-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+            <ul class="nav-menu">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Visualizer</a></li>
+                <li><a href="#">Gallery</a></li>
+                <li><a href="#">Learn</a></li>
+                <li><a href="#">Resources</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="comparison-tool">
+        <h1>Comparison Tool</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua!</p>
+        <p><strong>Currently viewing:</strong> <span class="highlight">Atopic Dermatitis</span></p>
+        
+        <div class="image-comparison">
+            <div class="comparison-container">
+                <div class="comparison-image before">Image selected</div>
+                <div class="comparison-image after"></div>
+                <input type="range" min="0" max="100" value="50" class="slider">
+            </div>
+        </div>
+
+        <div class="toggle-container">
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider round"></span>
+            </label>
+            <span>Face</span>
+        </div>
+
+        <div class="selection-container">
+            <h3>Select Skin Tone</h3>
+            <div class="skin-tone-options">
+                <button class="skin-tone dark"></button>
+                <button class="skin-tone medium-dark"></button>
+                <button class="skin-tone medium"></button>
+                <button class="skin-tone light"></button>
+            </div>
+
+            <h3>Select Severity</h3>
+            <div class="severity-options">
+                <button class="severity normal">Normal</button>
+                <button class="severity mild">Mild</button>
+                <button class="severity severe">Severe</button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <a href="#top" class="back-to-top">Back to top</a>
+        </div>
+    </footer>
+</body>
+</html>
