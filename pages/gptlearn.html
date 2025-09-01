@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TONO • Learning</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #0f0f13;           /* app background (dark) */
+      --panel: #17171d;        /* panels/cards */
+      --panel-2: #1d1d25;      /* slightly lighter */
+      --text: #f5f5f7;         /* main text */
+      --muted: #b7b7c2;        /* muted text */
+      --brand: #8318FD;        /* Naomi's purple */
+      --brand-600: #6a12d0;
+      --brand-700: #5c0fb6;
+      --accent: #42d392;       /* fresh green accent for success */
+      --danger: #ff6b6b;       /* feedback error */
+      --warning: #ffd166;
+      --radius-xl: 20px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --shadow-1: 0 8px 24px rgba(19, 19, 26, 0.5);
+      --shadow-2: 0 10px 30px rgba(0,0,0,.35);
+      --ring: 0 0 0 3px rgba(131,24,253,.35);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      color:var(--text); background:radial-gradient(1200px 600px at 10% -10%, rgba(131,24,253,.18), transparent 60%),
+                        radial-gradient(1000px 800px at 110% -20%, rgba(66,211,146,.08), transparent 60%),
+                        var(--bg);
+      line-height:1.6; letter-spacing:.2px;
+    }
+    a{color:inherit}
+
+    /* Top progress bar */
+    .reading-progress{position:fixed; inset:0 0 auto 0; height:4px; background:linear-gradient(90deg,var(--brand),#b794ff); transform-origin:0 50%; transform:scaleX(0); z-index:9999}
+
+    header.site{
+      position:sticky; top:0; z-index:1000; backdrop-filter:saturate(180%) blur(12px);
+      background:linear-gradient(180deg, rgba(15,15,19,.9), rgba(15,15,19,.6));
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .topbar{max-width:1100px; margin:0 auto; padding:16px 20px; display:flex; align-items:center; gap:16px}
+    .logo{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.5px}
+    .logo-mark{width:28px; height:28px; border-radius:10px; background:conic-gradient(from 200deg at 50% 50%, var(--brand), #b794ff 35%, #42d392 65%, var(--brand)); box-shadow:0 6px 20px rgba(131,24,253,.35)}
+    .tabs{margin-left:auto; display:flex; gap:8px; flex-wrap:wrap}
+    .tab{padding:8px 12px; border-radius:999px; background:transparent; color:var(--muted); border:1px solid rgba(255,255,255,.08);
+      cursor:pointer; font-weight:600}
+    .tab.active{background:rgba(131,24,253,.16); color:var(--text); border-color:rgba(131,24,253,.5)}
+
+    .wrap{max-width:1100px; margin:24px auto; padding:0 20px 64px; display:grid; grid-template-columns:260px 1fr; gap:24px}
+    @media (max-width: 980px){ .wrap{grid-template-columns:1fr} }
+
+    /* Sidebar */
+    nav.sidebar{position:sticky; top:84px; align-self:start; background:linear-gradient(180deg, rgba(29,29,37,.8), rgba(23,23,29,.8));
+      border:1px solid rgba(255,255,255,.06); border-radius:var(--radius-lg); box-shadow:var(--shadow-1)}
+    .toc{list-style:none; padding:14px; margin:0}
+    .toc li{margin:2px 0}
+    .toc a{display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; color:var(--muted); text-decoration:none}
+    .toc a .dot{width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,.25)}
+    .toc a.active{background:rgba(131,24,253,.12); color:var(--text)}
+    .toc a.active .dot{background:var(--brand)}
+
+    /* Main */
+    .section{background:linear-gradient(180deg, rgba(29,29,37,.75), rgba(23,23,29,.75)); border:1px solid rgba(255,255,255,.06);
+      border-radius:var(--radius-xl); padding:24px; box-shadow:var(--shadow-1); margin-bottom:18px}
+    .section h2{margin:0 0 10px; letter-spacing:.4px}
+    .eyebrow{display:inline-flex; gap:8px; align-items:center; padding:6px 10px; border-radius:999px; font-size:12px; letter-spacing:.4px; color:#e9ddff; background:rgba(131,24,253,.18); border:1px solid rgba(131,24,253,.35)}
+    .lede{color:var(--muted); margin:6px 0 18px}
+
+    .pill{display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); color:var(--muted); font-weight:600}
+
+    .grid{display:grid; gap:16px}
+    .grid.cols-3{grid-template-columns:repeat(3,1fr)}
+    .grid.cols-2{grid-template-columns:repeat(2,1fr)}
+    @media (max-width: 900px){ .grid.cols-3{grid-template-columns:1fr 1fr} }
+    @media (max-width: 640px){ .grid.cols-3,.grid.cols-2{grid-template-columns:1fr} }
+
+    .card{background:linear-gradient(180deg, rgba(29,29,37,.8), rgba(23,23,29,.8)); border:1px solid rgba(255,255,255,.06); border-radius:16px; padding:16px; box-shadow:var(--shadow-1)}
+    .card h3{margin:0 0 6px}
+    .meta{font-size:12px; color:var(--muted)}
+
+    .callout{border-left:4px solid var(--brand); padding:12px 14px; background:rgba(131,24,253,.1); border-radius:10px}
+
+    .btn{appearance:none; border:none; background:linear-gradient(180deg, var(--brand), var(--brand-600)); color:white; font-weight:700; padding:10px 14px; border-radius:12px; box-shadow:0 10px 24px rgba(131,24,253,.35); cursor:pointer}
+    .btn.secondary{background:linear-gradient(180deg, #2a2a34, #20202a); color:#e7e7f0; border:1px solid rgba(255,255,255,.08); box-shadow:var(--shadow-2)}
+    .btn:focus{outline:none; box-shadow:var(--shadow-2), var(--ring)}
+
+    /* Accordion */
+    .accordion{border:1px solid rgba(255,255,255,.06); border-radius:14px; overflow:hidden}
+    .accordion-item + .accordion-item{border-top:1px solid rgba(255,255,255,.06)}
+    .accordion-trigger{width:100%; text-align:left; background:rgba(255,255,255,.02); color:var(--text); padding:14px 16px; border:0; cursor:pointer; font-weight:700; display:flex; align-items:center; justify-content:space-between}
+    .accordion-content{max-height:0; overflow:hidden; transition:max-height .35s ease}
+    .accordion-item.open .accordion-content{max-height:600px}
+
+    /* Quiz */
+    .quiz{display:grid; gap:12px}
+    .quiz .opt{display:flex; gap:10px; padding:12px; border:1px solid rgba(255,255,255,.08); border-radius:12px; cursor:pointer; align-items:flex-start}
+    .quiz .opt:hover{background:rgba(255,255,255,.03)}
+    .quiz .opt[data-state="correct"]{background:rgba(66,211,146,.12); border-color:rgba(66,211,146,.5)}
+    .quiz .opt[data-state="wrong"]{background:rgba(255,107,107,.12); border-color:rgba(255,107,107,.55)}
+
+    .progress{height:10px; background:rgba(255,255,255,.06); border-radius:999px; overflow:hidden}
+    .progress > span{display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--brand),#b794ff); transition:width .35s ease}
+
+    /* Tooltip (glossary) */
+    .tip{position:relative; border-bottom:1px dashed rgba(255,255,255,.35); cursor:help}
+    .tip:hover .tip-bubble{opacity:1; transform:translateY(0)}
+    .tip-bubble{position:absolute; left:0; top:calc(100% + 8px); width:min(320px, 90vw); background:#101014; border:1px solid rgba(255,255,255,.1); border-radius:12px; padding:12px; box-shadow:var(--shadow-2); opacity:0; transform:translateY(6px); transition:.2s ease; z-index:5}
+
+    /* Image tray (uses your existing assets later) */
+    .image-tray{display:grid; grid-template-columns:repeat(4,1fr); gap:8px}
+    .image-tray .thumb{aspect-ratio:1/1; border-radius:12px; background:linear-gradient(180deg,#292936,#23232e); border:1px solid rgba(255,255,255,.06); display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:12px}
+    @media (max-width:740px){.image-tray{grid-template-columns:repeat(2,1fr)}}
+
+    /* Inline "try-it" controls */
+    .controls{display:grid; grid-template-columns:repeat(3,1fr); gap:8px}
+    .control{display:grid; gap:6px}
+    .select{appearance:none; width:100%; padding:10px 12px; border-radius:12px; border:1px solid rgba(255,255,255,.08); background:linear-gradient(180deg,#242430,#1f1f2a); color:var(--text); font-weight:600; background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="%23b7b7c2" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>'); background-repeat:no-repeat; background-position:right 10px center}
+
+    .kicker{font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.14em}
+    .divider{height:1px; background:linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent); margin:10px 0}
+
+    /* Footer */
+    footer{max-width:1100px; margin:40px auto 80px; color:#9aa0a6; padding:0 20px}
+  </style>
+</head>
+<body>
+  <div class="reading-progress" id="readingProgress"></div>
+
+  <header class="site">
+    <div class="topbar">
+      <div class="logo" aria-label="TONO">
+        <div class="logo-mark" aria-hidden="true"></div>
+        <span>TONO • Learning</span>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Sections">
+        <button class="tab active" data-jump="#overview" role="tab">Overview</button>
+        <button class="tab" data-jump="#recognition" role="tab">Recognition</button>
+        <button class="tab" data-jump="#patterns" role="tab">Patterns</button>
+        <button class="tab" data-jump="#quiz" role="tab">Quick Quiz</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- SIDEBAR TOC -->
+    <nav class="sidebar" aria-label="On this page">
+      <ol class="toc" id="toc">
+        <li><a href="#overview"><span class="dot"></span> Overview</a></li>
+        <li><a href="#recognition"><span class="dot"></span> Recognition across tones</a></li>
+        <li><a href="#patterns"><span class="dot"></span> Common patterns</a></li>
+        <li><a href="#practice"><span class="dot"></span> Try it</a></li>
+        <li><a href="#quiz"><span class="dot"></span> Quick quiz</a></li>
+        <li><a href="#references"><span class="dot"></span> References</a></li>
+      </ol>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div>
+      <!-- Overview / Hero -->
+      <section id="overview" class="section" tabindex="-1">
+        <span class="eyebrow">Learning Module</span>
+        <h2>Recognizing eczema across skin tones</h2>
+        <p class="lede">This guided page distills visual cues, patterns, and pitfalls when assessing eczema—optimized for quick scanning and deeper dives. UI elements match the TONO viewer: soft panels, rounded corners, and purple highlights.</p>
+
+        <div class="grid cols-3" style="margin-top:14px">
+          <div class="card">
+            <h3>Key goals</h3>
+            <ul>
+              <li>Differentiate <span class="tip">erythema<span class="tip-bubble">In darker tones, erythema may present as purple, gray, or ashen rather than bright red.</span></span> by tone</li>
+              <li>Spot distribution patterns by region</li>
+              <li>Avoid common misreads (e.g., PIH vs active flare)</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Estimated time</h3>
+            <div class="progress" aria-label="Module progress"><span id="moduleProgress" style="width: 12%"></span></div>
+            <p class="meta" id="progressMeta">0 of 8 micro‑tasks done</p>
+          </div>
+          <div class="card">
+            <h3>Resources</h3>
+            <div class="grid cols-2">
+              <span class="pill">Styleguide</span>
+              <span class="pill">TONO Viewer</span>
+              <span class="pill">Compare Tool</span>
+              <span class="pill">Gallery</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Recognition -->
+      <section id="recognition" class="section" tabindex="-1">
+        <span class="eyebrow">Visual cues</span>
+        <h2>How features shift by skin tone</h2>
+        <p class="lede">Core signs—erythema, lichenification, scaling—present differently by tone. Use the toggles to scan differences quickly.</p>
+
+        <div class="grid cols-3">
+          <div class="card">
+            <h3>Erythema</h3>
+            <p>Often <b>red/pink</b> in lighter tones, but can appear <b>violet, gray, or ashen</b> in darker tones.</p>
+            <div class="divider"></div>
+            <div class="controls" aria-label="Toggle tone examples">
+              <div class="control">
+                <span class="kicker">Tone</span>
+                <select class="select toneSel" data-target="erythema">
+                  <option value="light">Light</option>
+                  <option value="medium">Medium</option>
+                  <option value="olive">Olive</option>
+                  <option value="dark">Dark</option>
+                </select>
+              </div>
+              <div class="control">
+                <span class="kicker">Severity</span>
+                <select class="select sevSel" data-target="erythema">
+                  <option>normal</option>
+                  <option>mild</option>
+                  <option>moderate</option>
+                  <option>severe</option>
+                </select>
+              </div>
+              <div class="control">
+                <span class="kicker">Region</span>
+                <select class="select regionSel" data-target="erythema">
+                  <option value="face-neck">face-neck</option>
+                  <option value="flexural-fold-elbow">flexural-fold-elbow</option>
+                </select>
+              </div>
+            </div>
+            <div class="image-tray" style="margin-top:10px" id="tray-erythema">
+              <div class="thumb">Example • light • mild</div>
+              <div class="thumb">Example • light • moderate</div>
+              <div class="thumb">Example • dark • mild</div>
+              <div class="thumb">Example • dark • severe</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Lichenification</h3>
+            <p>Look for <b>thickened skin</b>, accentuated lines; tone may mask erythema, so rely on texture.</p>
+            <div class="callout" style="margin-top:8px"><b>Tip:</b> Compare against uninvolved skin when in doubt.</div>
+          </div>
+
+          <div class="card">
+            <h3>Scaling</h3>
+            <p>Fine white scale on darker tones can mimic hypopigmentation—check borders and pruritus history.</p>
+            <div class="callout" style="margin-top:8px"><b>Pitfall:</b> Don’t confuse post‑inflammatory pigment change (PIH/PIHypo) with active disease.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Patterns -->
+      <section id="patterns" class="section" tabindex="-1">
+        <span class="eyebrow">Distribution</span>
+        <h2>Common regional patterns</h2>
+        <p class="lede">Use the accordion to skim patterns you’ll see most often in primary care.</p>
+
+        <div class="accordion" id="patternAcc">
+          <div class="accordion-item">
+            <button class="accordion-trigger" aria-expanded="false">Atopic • face‑neck</button>
+            <div class="accordion-content">
+              <div class="card" style="margin:12px">
+                <p>Periorbital and perioral involvement; cheeks in infants. Erythema may be subtle in darker tones—look for <i>texture</i> and <i>lichenification</i>.</p>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-trigger" aria-expanded="false">Atopic • flexural‑fold (elbow)</button>
+            <div class="accordion-content">
+              <div class="card" style="margin:12px">
+                <p>Pruritic patches in antecubital fossae. Chronic rubbing → lichenification. Consider contact triggers in adults.</p>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-trigger" aria-expanded="false">Seborrheic • scalp / face</button>
+            <div class="accordion-content">
+              <div class="card" style="margin:12px">
+                <p>Greasy scale on erythematous base; in darker tones erythema may read as <b>violaceous</b>. Evaluate hairline and retroauricular folds.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Try it (hooks ready to wire to your data.js/getImagePath) -->
+      <section id="practice" class="section" tabindex="-1">
+        <span class="eyebrow">Interactive</span>
+        <h2>Try it with TONO assets</h2>
+        <p class="lede">Pick a type, tone, severity, and region. This demo is wired to <code>getImagePath(type, region, tone, severity)</code> if present; if not, placeholders show.</p>
+
+        <div class="grid cols-2" style="align-items:start">
+          <div class="card">
+            <div class="controls" style="margin-bottom:10px">
+              <div class="control">
+                <span class="kicker">Eczema Type</span>
+                <select class="select" id="typeSel">
+                  <option>atopic</option>
+                  <option>contact</option>
+                  <option>seborrheic</option>
+                  <option>stasis</option>
+                  <option>neuro</option>
+                  <option>nummular</option>
+                  <option>dyshidrotic</option>
+                </select>
+              </div>
+              <div class="control">
+                <span class="kicker">Skin tone</span>
+                <select class="select" id="toneSel2">
+                  <option>light</option>
+                  <option>medium</option>
+                  <option>olive</option>
+                  <option>dark</option>
+                </select>
+              </div>
+              <div class="control">
+                <span class="kicker">Severity</span>
+                <select class="select" id="sevSel2">
+                  <option>normal</option>
+                  <option>mild</option>
+                  <option>moderate</option>
+                  <option>severe</option>
+                </select>
+              </div>
+            </div>
+            <div class="control">
+              <span class="kicker">Region</span>
+              <select class="select" id="regionSel2">
+                <option>face-neck</option>
+                <option>flexural-fold-elbow</option>
+                <option>hand</option>
+                <option>scalp</option>
+                <option>wrists</option>
+                <option>legs</option>
+                <option>palms</option>
+              </select>
+            </div>
+            <div class="divider"></div>
+            <button class="btn" id="previewBtn">Preview</button>
+          </div>
+
+          <div class="card" style="min-height:280px; display:grid; place-items:center; position:relative; overflow:hidden">
+            <img id="previewImg" alt="Preview" style="max-width:100%; border-radius:12px; display:none"/>
+            <div id="previewPh" class="pill" style="position:absolute">Preview image will appear here</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quiz -->
+      <section id="quiz" class="section" tabindex="-1">
+        <span class="eyebrow">Check for understanding</span>
+        <h2>Quick quiz (3 questions)</h2>
+        <p class="lede">Immediate feedback. Your score updates as you go.</p>
+
+        <div class="grid cols-3">
+          <div class="card">
+            <h3>Q1. On darker skin tones, erythema may appear…</h3>
+            <div class="quiz" data-qid="q1" data-answer="b">
+              <div class="opt" data-choice="a">Bright red only</div>
+              <div class="opt" data-choice="b">Violet, gray, or ashen</div>
+              <div class="opt" data-choice="c">Greenish</div>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Q2. A reliable cue when redness is subtle is…</h3>
+            <div class="quiz" data-qid="q2" data-answer="c">
+              <div class="opt" data-choice="a">Hair color</div>
+              <div class="opt" data-choice="b">Nail length</div>
+              <div class="opt" data-choice="c">Texture / lichenification</div>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Q3. Fine white scale on dark skin might be mistaken for…</h3>
+            <div class="quiz" data-qid="q3" data-answer="a">
+              <div class="opt" data-choice="a">Hypopigmentation</div>
+              <div class="opt" data-choice="b">Bruising</div>
+              <div class="opt" data-choice="c">Tattoos</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px; display:flex; align-items:center; gap:14px">
+          <div class="progress" style="flex:1"><span id="quizBar"></span></div>
+          <div class="pill" id="quizScore">Score: 0/3</div>
+          <button class="btn secondary" id="resetQuiz">Reset</button>
+        </div>
+      </section>
+
+      <!-- References -->
+      <section id="references" class="section" tabindex="-1">
+        <span class="eyebrow">References</span>
+        <h2>Further reading</h2>
+        <div class="grid cols-2">
+          <div class="card">
+            <h3>Inclusive dermatology</h3>
+            <p class="meta">Curated resources that informed TONO’s visuals and copy.</p>
+            <ul>
+              <li>Representation of eczema across skin tones</li>
+              <li>Common diagnostic pitfalls in skin of color</li>
+              <li>Best practices for patient education</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Credits</h3>
+            <p class="meta">Illustrations, UI, and copy © Naomi Clay. Educational framing with assistance from TONO Learning module.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="divider"></div>
+    <p>TONO • Learning module. Built to match the viewer/compare aesthetic—rounded panels, subtle gradients, and purple accents—while adding teaching aids (progress, TOC, quiz).</p>
+  </footer>
+
+  <script>
+    // Reading progress bar
+    const prog = document.getElementById('readingProgress');
+    document.addEventListener('scroll', () => {
+      const h = document.documentElement;
+      const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+      prog.style.transform = `scaleX(${Math.min(1, scrolled)})`;
+    }, {passive:true});
+
+    // Tabs jump
+    document.querySelectorAll('.tab').forEach(btn => btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const id = btn.getAttribute('data-jump');
+      const el = document.querySelector(id);
+      el?.scrollIntoView({behavior:'smooth', block:'start'});
+    }));
+
+    // Scrollspy TOC
+    const tocLinks = [...document.querySelectorAll('.toc a')];
+    const sections = tocLinks.map(a => document.querySelector(a.getAttribute('href')));
+    const spy = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if(e.isIntersecting){
+          const id = '#' + e.target.id;
+          tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === id));
+        }
+      });
+    }, {rootMargin:'-40% 0px -55% 0px', threshold:0});
+    sections.forEach(s => s && spy.observe(s));
+
+    // Accordion behavior
+    document.querySelectorAll('.accordion-trigger').forEach(tr => tr.addEventListener('click', () => {
+      const item = tr.closest('.accordion-item');
+      const open = item.classList.toggle('open');
+      tr.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }));
+
+    // Demo: update image tray labels when selects change (Recognition card)
+    function updateTray(key){
+      const tray = document.getElementById('tray-' + key);
+      if(!tray) return;
+      const tone = document.querySelector(`.toneSel[data-target="${key}"]`).value;
+      const sev = document.querySelector(`.sevSel[data-target="${key}"]`).value;
+      const region = document.querySelector(`.regionSel[data-target="${key}"]`).value;
+      [...tray.children].forEach((c, i) => c.textContent = `${region} • ${tone} • ${sev} • ex ${i+1}`);
+      markTaskDone('t1');
+    }
+    document.querySelectorAll('.toneSel,.sevSel,.regionSel').forEach(sel => sel.addEventListener('change', e => updateTray(e.target.dataset.target)));
+
+    // Practice preview hooks (tries to call your existing getImagePath if present)
+    const previewBtn = document.getElementById('previewBtn');
+    const previewImg = document.getElementById('previewImg');
+    const previewPh = document.getElementById('previewPh');
+    previewBtn.addEventListener('click', () => {
+      const type = document.getElementById('typeSel').value;
+      const region = document.getElementById('regionSel2').value;
+      const tone = document.getElementById('toneSel2').value;
+      const sev = document.getElementById('sevSel2').value;
+      try{
+        if(typeof getImagePath === 'function'){
+          const src = getImagePath({ type, region, tone, severity: sev });
+          if(src){
+            previewImg.src = src;
+            previewImg.style.display = 'block';
+            previewPh.style.display = 'none';
+            markTaskDone('t2');
+            return;
+          }
+        }
+      }catch(err){ /* ignore and fall back */ }
+      // Fallback placeholder
+      const label = `${type} • ${region} • ${tone} • ${sev}`;
+      previewImg.style.display = 'none';
+      previewPh.style.display = 'inline-flex';
+      previewPh.textContent = label;
+      markTaskDone('t2');
+    });
+
+    // Quiz logic
+    const quizState = { answered:new Set(), correct:0 };
+    const quizBar = document.getElementById('quizBar');
+    const quizScore = document.getElementById('quizScore');
+
+    document.querySelectorAll('.quiz').forEach(block => {
+      block.addEventListener('click', e => {
+        const opt = e.target.closest('.opt');
+        if(!opt) return;
+        const qid = block.dataset.qid;
+        if(quizState.answered.has(qid)) return; // lock after first
+        const answer = block.dataset.answer;
+        const isCorrect = opt.dataset.choice === answer;
+        opt.dataset.state = isCorrect ? 'correct' : 'wrong';
+        if(!isCorrect){
+          [...block.querySelectorAll('.opt')].forEach(o => { if(o.dataset.choice===answer) o.dataset.state = 'correct'; });
+        }
+        quizState.answered.add(qid);
+        if(isCorrect) quizState.correct++;
+        const pct = (quizState.answered.size/3)*100;
+        quizBar.style.width = pct + '%';
+        quizScore.textContent = `Score: ${quizState.correct}/3`;
+        markTaskDone('t3');
+      });
+    });
+    document.getElementById('resetQuiz').addEventListener('click', () => {
+      quizState.answered.clear(); quizState.correct=0;
+      document.querySelectorAll('.quiz .opt').forEach(o => {o.removeAttribute('data-state');});
+      quizBar.style.width='0%'; quizScore.textContent='Score: 0/3';
+    });
+
+    // Micro-task tracker to feed the Overview progress card
+    const taskSet = new Set();
+    function markTaskDone(id){ if(!taskSet.has(id)){ taskSet.add(id); updateModuleProgress(); } }
+    function updateModuleProgress(){
+      const done = taskSet.size; const total = 8; // can expand later
+      document.getElementById('moduleProgress').style.width = ((done/total)*100) + '%';
+      document.getElementById('progressMeta').textContent = `${done} of ${total} micro‑tasks done`;
+    }
+
+  </script>
+</body>
+</html>

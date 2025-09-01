@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comparison page</title>
+  <link rel="stylesheet" href="../styles.css/main.css">
+  <link rel="stylesheet" href="../styles.css/comparison.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="white-header">
+  <div class="logo">
+    <a href="../index.html">
+      <img src="../images/logo.png" alt="Tono Logo">
+    </a>
+  </div>
+  <div class="menu-icon" id="menuIcon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</header>
+
+<div id="fullScreenMenu" class="full-screen-menu">
+  <nav>
+    <a href="../index.html">Home</a>
+    <a href="viewer.html">Eczema Visualizer</a>
+    <a href="learn.html">Learn About Eczema</a>
+    <a href="resources.html">Resources</a>
+    <a href="about.html">About Us</a>
+    <a href="gallery.html">Image Gallery</a>
+  </nav>
+</div>
+
+<section class="breadcrumb">
+  <p><a href="../index.html">
+    <img src="../images/home-icon.png" alt="Home Icon" class="home-icon"></a> > Image Gallery
+  </p>
+</section>
+
+  <main class="comparison-page">
+    <h1>Comparison Tool</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua!</p>
+    <p><strong>Currently viewing:</strong> <span id="currentType">Atopic Dermatitis</span></p>
+
+    <!-- Comparison Container -->
+    <div class="comparison-container">
+      <div class="comparison-image-wrapper" id="comparisonWrapper">
+        <img id="imageA" class="comparison-image" src="../images/eczema-images/first-placeholder.png" />
+        <img id="imageB" class="comparison-image comparison-overlay" src="../images/eczema-images/second-placeholder.png" />
+        <div class="slider-handle" id="sliderHandle"></div>
+      </div>
+      <button class="edit-button" id="editB">Edit</button>
+    </div>
+    
+
+    <!-- Edit Controls -->
+    <div class="edit-controls" id="editControls">
+      <h3 id="editLabel">Edit Right Side</h3>
+      <div class="selectors">
+        <label>Skin Tone:</label>
+        <select id="toneSelect">
+          <option value="light">Light</option>
+          <option value="medium-light">Medium Light</option>
+          <option value="medium-dark">Medium Dark</option>
+          <option value="dark">Dark</option>
+        </select>
+
+        <label>Severity:</label>
+        <select id="severitySelect">
+          <option value="normal">Normal</option>
+          <option value="mild">Mild</option>
+          <option value="moderate">Moderate</option>
+          <option value="severe">Severe</option>
+        </select>
+
+        <label>Body Part:</label>
+        <select id="regionSelect">
+          <option value="face-neck">Face and Neck</option>
+          <option value="elbow">Flexural Fold-Elbow</option>
+        </select>
+      </div>
+      <button onclick="applySelection()">Apply</button>
+    </div>
+  </main>
+
+ <!-- Back to Top -->
+<div class="back-to-top">
+    <a href="#">Back to top &#x25B2;</a>
+  </div>
+  
+  <!-- Footer -->
+  <footer>
+    <div class="footer-item">Lorem ipsum</div>
+    <div class="footer-item">Lorem ipsum</div>
+    <div class="footer-item">Lorem ipsum</div>
+  </footer>
+  <!--Loads save image-->
+  <script>
+    const savedImage = localStorage.getItem("imageToCompare");
+    if (savedImage) {
+      document.getElementById("imageA").src = savedImage;
+    }
+  </script>
+  <script src="../script.js/data.js"></script>
+  <script src="../script.js/main.js"></script>
+  <script src="../script.js/comparison.js"></script>
+  </body>
+  </html>

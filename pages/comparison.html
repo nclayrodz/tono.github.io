@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compare Eczema Images</title>
+  <link rel="stylesheet" href="../styles.css/main.css">
+  <link rel="stylesheet" href="../styles.css/viewer.css">
+
+  <style>
+    .comparison-controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .control-panel {
+      flex: 1 1 400px;
+      max-width: 500px;
+    }
+
+    .control-block {
+      margin-bottom: 1.5rem;
+    }
+
+    .control-block h3 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      text-align: left;
+    }
+
+    .image-comparison-wrapper {
+      position: relative;
+      width: 90%;
+      max-width: 800px;
+      margin: 2rem auto;
+      aspect-ratio: 4 / 3;
+    }
+
+    .image-comparison-wrapper img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .slider-bar {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 100%;
+      background-color: #333;
+      z-index: 5;
+      cursor: ew-resize;
+    }
+
+    .slider-handle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 24px;
+      height: 24px;
+      background-color: black;
+      border-radius: 50%;
+      z-index: 6;
+      cursor: grab;
+    }
+  </style>
+</head>
+<body>
+  <h2 style="text-align: center">Compare Eczema Images</h2>
+
+  <div class="image-comparison-wrapper">
+    <img id="comparisonImageA" src="../images/eczema-images/placeholder.png" alt="">
+    <img id="comparisonImageB" src="../images/eczema-images/placeholder.png" alt="" style="clip-path: inset(0 50% 0 0); pointer-events: none;">
+    <div class="slider-bar" id="sliderBar"></div>
+    <div class="slider-handle" id="sliderHandle"></div>
+  </div>
+
+  <div class="comparison-controls">
+    <div class="control-panel">
+      <div class="control-block">
+        <h3>Skin Tone (Image A)</h3>
+        <div class="swatches" id="skinTonesA">
+          <div class="swatch light" data-tone="light"></div>
+          <div class="swatch olive" data-tone="olive"></div>
+          <div class="swatch medium selected" data-tone="medium"></div>
+          <div class="swatch dark" data-tone="dark"></div>
+        </div>
+      </div>
+
+      <div class="control-block">
+        <h3>Severity (Image A)</h3>
+        <div class="severity-buttons" id="severitiesA">
+          <button class="severity-btn selected" data-severity="normal">Normal</button>
+          <button class="severity-btn" data-severity="mild">Mild</button>
+          <button class="severity-btn" data-severity="moderate">Moderate</button>
+          <button class="severity-btn" data-severity="severe">Severe</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="control-panel">
+      <div class="control-block">
+        <h3>Skin Tone (Image B)</h3>
+        <div class="swatches" id="skinTonesB">
+          <div class="swatch light" data-tone="light"></div>
+          <div class="swatch olive" data-tone="olive"></div>
+          <div class="swatch medium selected" data-tone="medium"></div>
+          <div class="swatch dark" data-tone="dark"></div>
+        </div>
+      </div>
+
+      <div class="control-block">
+        <h3>Severity (Image B)</h3>
+        <div class="severity-buttons" id="severitiesB">
+          <button class="severity-btn selected" data-severity="normal">Normal</button>
+          <button class="severity-btn" data-severity="mild">Mild</button>
+          <button class="severity-btn" data-severity="moderate">Moderate</button>
+          <button class="severity-btn" data-severity="severe">Severe</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../script.js/data.js"></script>
+  <script>
+    function getImagePath(type, region, tone, severity) {
+      const match = imageData.find(item =>
+        item.type === type &&
+        item.region === region &&
+        item.tone === tone &&
+        item.severity === severity
+      );
+      return match ? match.src : "../images/eczema-images/placeholder.png";
+    }
+
+    const type = localStorage.getItem("compareType");
+    const region = localStorage.getItem("compareRegion");
+    const toneA = localStorage.getItem("compareTone");
+    const severityA = localStorage.getItem("compareSeverity");
+
+    const imgA = document.getElementById("comparisonImageA");
+    const imgB = document.getElementById("comparisonImageB");
+    const sliderBar = document.getElementById("sliderBar");
+    const sliderHandle = document.getElementById("sliderHandle");
+
+    imgA.src = getImagePath(type, region, toneA, severityA);
+    imgB.src = getImagePath(type, region, toneA, "mild");
+
+    function updateImage(id) {
+      const el = id === "A" ? imgA : imgB;
+      const toneEl = document.querySelector(`#skinTones${id} .swatch.selected`)?.dataset?.tone;
+      const severityEl = document.querySelector(`#severities${id} .severity-btn.selected`)?.dataset?.severity;
+      el.src = getImagePath(type, region, toneEl, severityEl);
+    }
+
+    ["A", "B"].forEach(id => {
+      document.querySelectorAll(`#skinTones${id} .swatch`).forEach(swatch => {
+        swatch.addEventListener("click", () => {
+          document.querySelectorAll(`#skinTones${id} .swatch`).forEach(s => s.classList.remove("selected"));
+          swatch.classList.add("selected");
+          updateImage(id);
+        });
+      });
+
+      document.querySelectorAll(`#severities${id} .severity-btn`).forEach(button => {
+        button.addEventListener("click", () => {
+          document.querySelectorAll(`#severities${id} .severity-btn`).forEach(b => b.classList.remove("selected"));
+          button.classList.add("selected");
+          updateImage(id);
+        });
+      });
+    });
+
+    // Draggable slider logic
+    sliderHandle.addEventListener("mousedown", (e) => {
+      e.preventDefault();
+
+      function onMouseMove(e) {
+        const rect = imgA.getBoundingClientRect();
+        let x = e.clientX - rect.left;
+        const percent = Math.max(0, Math.min(100, (x / rect.width) * 100));
+        imgB.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
+        sliderBar.style.left = `${percent}%`;
+        sliderHandle.style.left = `${percent}%`;
+      }
+
+      function onMouseUp() {
+        document.removeEventListener("mousemove", onMouseMove);
+        document.removeEventListener("mouseup", onMouseUp);
+      }
+
+      document.addEventListener("mousemove", onMouseMove);
+      document.addEventListener("mouseup", onMouseUp);
+    });
+  </script>
+</body>
+</html>

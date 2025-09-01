@@ -1,0 +1,82 @@
+  /* Carousel */
+  .carousel {
+    position: relative;
+    background: linear-gradient(to right, #4E3AFF, #E0D0FF), #FFFFFF;
+    text-align: center;
+    padding: 5rem 1rem 3rem;
+  }
+  
+  .slides {
+    position: relative;
+    overflow: hidden;
+    height: 200px;
+  }
+  
+  .slide {
+    display: none;
+    font-size: 2rem;
+    padding: 2rem;
+  }
+  
+  .slide.active {
+    display: block;
+  }
+  
+  .dots {
+    margin-top: 1rem;
+  }
+  
+  .dot {
+    height: 15px;
+    width: 15px;
+    margin: 0 5px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+  }
+  
+  .dot.active {
+    background-color: #333;
+  }
+  
+  /* Jump Button */
+  .jump-btn {
+    margin-top: 2rem;
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    background: #5D5FEF;
+    border: none;
+    color: white;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .jump-btn:hover {
+    background: #8284fd;
+  }
+  
+  /* Info Sections */
+  .info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 2rem;
+    gap: 2rem;
+  }
+  
+  .card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    width: 300px;
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  .card-image {
+    height: 150px;
+    background: #ddd;
+    margin-bottom: 1rem;
+  }

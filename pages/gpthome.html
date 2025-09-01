@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>TONO • Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="./styles.css/main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{ --ink:#1f2473; --bg:#f2f4fb; --card:#ffffff; --muted:#6b7280; --radius:18px; --shadow:0 8px 24px rgba(31,36,115,.12); }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:Inter,system-ui; background:var(--bg); color:#0f172a}
+
+    /* Header (matches compare/viewer) */
+    header.white-header{position:sticky; top:0; z-index:50; background:#fff; border-bottom:1px solid #e5e7eb}
+    header.white-header .logo{display:flex; align-items:center; gap:10px; padding:10px 16px}
+    header.white-header img{height:34px}
+    .menu-icon{margin-left:auto; margin-right:12px; width:28px; height:20px; display:grid; align-content:space-between; cursor:pointer}
+    .menu-icon span{display:block; height:2px; background:#111827; border-radius:2px}
+    .full-screen-menu{position:fixed; inset:0; background:rgba(255,255,255,.98); display:none; align-items:center; justify-content:center}
+    .full-screen-menu nav{display:grid; gap:18px; text-align:center}
+    .full-screen-menu a{color:#111827; font-weight:800; text-decoration:none}
+
+    .wrap{max-width:1100px; margin:0 auto; padding:0 16px}
+
+    /* Hero Carousel */
+    .hero{background:linear-gradient(180deg,#ffffff,#eef2ff); border-bottom:1px solid #e5e7eb}
+    .carousel{position:relative; overflow:hidden; border-radius:0}
+    .slides{display:flex; transition:transform .5s ease; will-change:transform}
+    .slide{min-width:100%; display:grid; grid-template-columns:1.1fr .9fr; gap:24px; align-items:center; padding:28px 0}
+    .slide .copy{padding:0 8px 0 0}
+    .slide h1{font-size:30px; color:var(--ink); margin:0 0 6px}
+    .slide p{color:#334155; margin:0 0 12px; line-height:1.6}
+    .slide .media{display:grid; place-items:center}
+    .mock{width:100%; max-width:540px; aspect-ratio:16/9; background:#fff; border:1px solid #e5e7eb; border-radius:16px; box-shadow:var(--shadow); overflow:hidden}
+    .mock img, .mock video{width:100%; height:100%; object-fit:cover; display:block}
+
+    .dots{display:flex; gap:8px; justify-content:center; padding:8px 0 16px}
+    .dot{width:10px; height:10px; border-radius:999px; background:#c7d2fe; border:1px solid #94a3b8; cursor:pointer}
+    .dot[aria-current="true"]{background:var(--ink)}
+    .nav{position:absolute; inset:0; display:flex; align-items:center; justify-content:space-between; padding:0 8px; pointer-events:none}
+    .nav button{pointer-events:auto; width:40px; height:40px; border-radius:999px; border:1px solid #cbd5e1; background:#fff; box-shadow:0 4px 12px rgba(0,0,0,.08); cursor:pointer}
+
+    @media (max-width: 980px){ .slide{grid-template-columns:1fr; padding:20px 0} .slide .media{order:-1} }
+
+    /* Link cards */
+    .panel{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:16px; border:1px solid #e5e7eb; margin:24px 0}
+    .links-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px}
+    .link-card{display:block; text-decoration:none; background:#fff; border:1px solid #e5e7eb; border-radius:14px; padding:20px; box-shadow:0 6px 16px rgba(31,36,115,.1); transition:transform .2s ease}
+    .link-card:hover{transform:translateY(-4px)}
+    .link-card h3{margin:0 0 8px; color:var(--ink)}
+    .link-card p{margin:0; font-size:14px; color:#475569}
+
+    /* Footer */
+    footer{margin:40px auto; text-align:center; font-size:14px; color:#6b7280}
+  </style>
+</head>
+<body>
+  <header class="white-header">
+    <div class="logo">
+      <a href="./index.html"><img src="./images/logo.png" alt="Tono Logo"></a>
+      <div class="menu-icon" id="menuIcon" aria-label="Open menu" role="button" tabindex="0"><span></span><span></span><span></span></div>
+    </div>
+  </header>
+  <div id="fullScreenMenu" class="full-screen-menu" aria-hidden="true">
+    <nav>
+      <a href="./index.html">Home</a>
+      <a href="./pages/viewer.html">Eczema Visualizer</a>
+      <a href="./learn.html">Learn About Eczema</a>
+      <a href="./pages/resources.html">Resources</a>
+      <a href="./pages/about.html">About Us</a>
+      <a href="./pages/gallery.html">Image Gallery</a>
+    </nav>
+  </div>
+
+  <!-- HERO with Carousel -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="carousel" id="carousel" aria-roledescription="carousel" aria-label="TONO feature highlights">
+        <div class="slides" id="slides">
+          <!-- Slide 1: Viewer animation -->
+          <div class="slide" aria-roledescription="slide" aria-label="Eczema Visualizer in action">
+            <div class="copy">
+              <h1>Visualize eczema across tones</h1>
+              <p>Browse by type, region, tone, and severity—built for quick clinical scanning.</p>
+              <p><a href="./pages/viewer.html" class="link-card" style="display:inline-block; padding:10px 14px">Open the Visualizer</a></p>
+            </div>
+            <div class="media">
+              <div class="mock">
+                <!-- Replace with your GIF/MP4 of the viewer being used -->
+                <img src="./images/banners/viewer.gif" alt="Animation of the TONO viewer controls"/>
+              </div>
+            </div>
+          </div>
+          <!-- Slide 2: Gallery animation -->
+          <div class="slide" aria-roledescription="slide" aria-label="Image gallery overview">
+            <div class="copy">
+              <h1>Explore the image gallery</h1>
+              <p>See all available assets in one place, with filters for tone, severity, region, and type.</p>
+              <p><a href="./pages/gallery.html" class="link-card" style="display:inline-block; padding:10px 14px">Browse the Gallery</a></p>
+            </div>
+            <div class="media">
+              <div class="mock">
+                <img src="./images/banners/gallery.gif" alt="Animation of the TONO image gallery"/>
+              </div>
+            </div>
+          </div>
+          <!-- Slide 3: Compare animation -->
+          <div class="slide" aria-roledescription="slide" aria-label="Compare tool with slider">
+            <div class="copy">
+              <h1>Compare side by side</h1>
+              <p>Use the slider to directly compare severity and tone—spot differences in seconds.</p>
+              <p><a href="./pages/compare.html" class="link-card" style="display:inline-block; padding:10px 14px">Open the Compare Tool</a></p>
+            </div>
+            <div class="media">
+              <div class="mock">
+                <img src="./images/banners/compare.gif" alt="Animation of the compare slider feature"/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav" aria-hidden="true">
+          <button id="prev" aria-label="Previous slide">◀</button>
+          <button id="next" aria-label="Next slide">▶</button>
+        </div>
+        <div class="dots" role="tablist" aria-label="Choose slide">
+          <button class="dot" role="tab" aria-selected="true" aria-current="true" data-idx="0"></button>
+          <button class="dot" role="tab" aria-selected="false" data-idx="1"></button>
+          <button class="dot" role="tab" aria-selected="false" data-idx="2"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick intro -->
+  <section class="wrap" style="padding:24px 16px">
+    <div class="panel">
+      <h2 style="color:var(--ink); margin:0 0 8px">Inclusive dermatology at-a-glance</h2>
+      <p class="muted" style="margin:0">TONO helps clinicians recognize eczema across all skin tones with consistent illustrations and interactive tools designed for quick, reliable pattern recognition.</p>
+    </div>
+  </section>
+
+  <!-- Link Cards -->
+  <section class="wrap" style="padding:0 16px 32px">
+    <div class="panel">
+      <h2 style="color:var(--ink); margin:0 0 8px">Dive into TONO</h2>
+      <div class="links-grid">
+        <a href="./pages/viewer.html" class="link-card">
+          <h3>Eczema Visualizer</h3>
+          <p>Browse eczema images by type, region, tone, and severity.</p>
+        </a>
+        <a href="./pages/compare.html" class="link-card">
+          <h3>Comparison Tool</h3>
+          <p>Directly compare eczema across different skin tones and severities.</p>
+        </a>
+        <a href="./learn.html" class="link-card">
+          <h3>Learn About Eczema</h3>
+          <p>Interactive lessons and quizzes designed for clinicians.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 TONO — Naomi Clay- the University of Toronto MScBMC program</p>
+  </footer>
+
+  <script>
+    // Menu toggle
+    const menu = document.getElementById('fullScreenMenu');
+    const icon = document.getElementById('menuIcon');
+    function toggleMenu(){ const on = menu.style.display !== 'flex'; menu.style.display = on ? 'flex' : 'none'; menu.setAttribute('aria-hidden', String(!on)); }
+    icon?.addEventListener('click', toggleMenu);
+    icon?.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); toggleMenu(); }});
+
+    // Carousel logic
+    const slides = document.getElementById('slides');
+    const dots = [...document.querySelectorAll('.dot')];
+    const prev = document.getElementById('prev');
+    const next = document.getElementById('next');
+    let idx = 0; let timer;
+    function go(i){ idx = (i+3)%3; slides.style.transform = `translateX(${-idx*100}%)`; dots.forEach((d,j)=>{ d.setAttribute('aria-current', String(j===idx)); d.setAttribute('aria-selected', String(j===idx)); }); }
+    function autoplay(){ clearInterval(timer); timer = setInterval(()=>go(idx+1), 6000); }
+    prev.addEventListener('click', ()=>{ go(idx-1); autoplay(); });
+    next.addEventListener('click', ()=>{ go(idx+1); autoplay(); });
+    dots.forEach(d=> d.addEventListener('click', ()=>{ go(parseInt(d.dataset.idx)); autoplay(); }));
+    go(0); autoplay();
+  </script>
+</body>
+</html>

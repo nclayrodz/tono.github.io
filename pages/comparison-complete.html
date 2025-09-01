@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Compare Visuals</title>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      padding: 1rem;
+      background: #fff;
+      border-bottom: 1px solid #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .comparison-page {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+
+    .compare-controls-wrapper {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .compare-panel {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .compare-panel h4 {
+      margin-bottom: 0.5rem;
+    }
+
+    .swatch-group,
+    .severity-group,
+    .region-group {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .swatch {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid black;
+      cursor: pointer;
+    }
+
+    .swatch.selected {
+      border: 3px solid black;
+    }
+
+    .btn {
+      padding: 0.4rem 1rem;
+      border: none;
+      background: #ddd;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .btn.selected {
+      background: black;
+      color: white;
+    }
+
+    .reset-link {
+      font-size: 0.9rem;
+      color: #444;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .comparison-container {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3/2;
+      margin-top: 2rem;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .comparison-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    #imageA {
+      z-index: 1;
+    }
+
+    #imageB {
+      z-index: 2;
+      clip-path: inset(0 50% 0 0);
+    }
+
+    .slider-handle {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 4px;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 3;
+    }
+
+    .slider-handle::after {
+      content: '';
+      width: 24px;
+      height: 24px;
+      background: white;
+      border: 3px solid black;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .remove-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: black;
+      color: white;
+      font-weight: bold;
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      cursor: pointer;
+      z-index: 4;
+    }
+
+    .remove-btn span {
+      color: red;
+      margin-left: 0.3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="../images/logo.png" alt="Tono Logo" style="height: 40px;" />
+  </header>
+
+  <div class="comparison-page">
+    <div class="compare-controls-wrapper">
+      <div class="compare-panel" id="panelA">
+        <h4>Select Skin Tone:</h4>
+        <div class="swatch-group" id="toneA"></div>
+
+        <h4>Select Severity Level:</h4>
+        <div class="severity-group" id="severityA"></div>
+
+        <h4>Select Body Part:</h4>
+        <div class="region-group" id="regionA"></div>
+
+        <div class="reset-link" onclick="resetPanel('A')">Reset Settings</div>
+      </div>
+
+      <div class="compare-panel" id="panelB">
+        <h4>Select Skin Tone:</h4>
+        <div class="swatch-group" id="toneB"></div>
+
+        <h4>Select Severity Level:</h4>
+        <div class="severity-group" id="severityB"></div>
+
+        <h4>Select Body Part:</h4>
+        <div class="region-group" id="regionB"></div>
+
+        <div class="reset-link" onclick="resetPanel('B')">Reset Settings</div>
+      </div>
+    </div>
+
+    <div class="comparison-container" id="comparisonContainer">
+      <img id="imageA" src="" alt="Left image" />
+      <img id="imageB" src="" alt="Right image" />
+      <div class="slider-handle" id="sliderHandle"></div>
+      <div class="remove-btn" onclick="removeComparison()">Remove Comparison <span>✖</span></div>
+    </div>
+  </div>
+
+  <script>
+    window.onload = function () {
+      const imageA = document.getElementById("imageA");
+      const imageB = document.getElementById("imageB");
+      const sliderHandle = document.getElementById("sliderHandle");
+      const comparisonContainer = document.getElementById("comparisonContainer");
+
+      let dragging = false;
+
+      sliderHandle.addEventListener("mousedown", () => dragging = true);
+      window.addEventListener("mouseup", () => dragging = false);
+      window.addEventListener("mousemove", (e) => {
+        if (!dragging) return;
+        const rect = comparisonContainer.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const percent = Math.max(0, Math.min(100, (x / rect.width) * 100));
+        imageB.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
+        sliderHandle.style.left = `${percent}%`;
+      });
+
+      sliderHandle.addEventListener("touchstart", () => dragging = true);
+      window.addEventListener("touchend", () => dragging = false);
+      window.addEventListener("touchmove", (e) => {
+        if (!dragging) return;
+        const touch = e.touches[0];
+        const rect = comparisonContainer.getBoundingClientRect();
+        const x = touch.clientX - rect.left;
+        const percent = Math.max(0, Math.min(100, (x / rect.width) * 100));
+        imageB.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
+        sliderHandle.style.left = `${percent}%`;
+      });
+    };
+  </script>
+
+</body>
+</html>

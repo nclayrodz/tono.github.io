@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>TONO • Image Gallery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../styles.css/main.css">
+
+  <style>
+    :root{
+      --ink:#1f2473; --ink-2:#353bb3; --bg:#f2f4fb; --card:#fff;
+      --muted:#6b7280; --ring:#7a86ff; --shadow:0 8px 24px rgba(31,36,115,.12);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0; background:var(--bg); color:#0f172a;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
+    .wrap{max-width:1100px; margin:32px auto; padding:16px}
+    h1{font-size:24px; color:var(--ink); margin:8px 0 16px}
+    .lede{max-width:560px; line-height:1.6; color:#334155; margin-bottom:20px}
+
+    .panel{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow);
+      padding:16px; border:1px solid #e5e7eb}
+
+    /* Filters */
+    .filters{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+    @media (max-width: 860px){ .filters{grid-template-columns:1fr} }
+    .filter{position:relative}
+    .filter > button{
+      width:100%; text-align:left; border:1px solid #c7cbe1; background:#f8f9ff;
+      padding:10px 12px; border-radius:12px; font-weight:600; color:#1f2937;
+      display:flex; justify-content:space-between; align-items:center; gap:8px;
+    }
+    .filter[aria-expanded="true"] > button{
+      border-color:var(--ink); box-shadow:0 0 0 3px rgba(122,134,255,.25)
+    }
+    .menu{
+      position:absolute; top:calc(100% + 6px); left:0; right:0; z-index:20;
+      background:#fff; border:1px solid #e5e7eb; border-radius:14px; box-shadow:var(--shadow);
+      padding:8px; max-height:280px; overflow:auto; display:none;
+    }
+    .filter[aria-expanded="true"] .menu{display:block}
+    .opt{display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:10px; cursor:pointer}
+    .opt:hover{background:#f6f7ff}
+    .opt input{width:16px; height:16px}
+    .sw{width:20px; height:14px; border-radius:4px; border:1px solid #e5e7eb}
+    .sw[data-tone="light"]{background:#f5e3d3}
+    .sw[data-tone="medium"]{background:#d5a98b}
+    .sw[data-tone="olive"]{background:#b5835a}
+    .sw[data-tone="dark"]{background:#6a4a3a}
+
+    .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px}
+    .chip{display:inline-flex; gap:6px; align-items:center; background:#eef2ff; color:#1f2473;
+      border-radius:999px; padding:.35rem .6rem; font-weight:700; border:1px solid #d7dbff}
+    .chip button{all:unset; cursor:pointer; font-weight:900}
+
+    .actions{display:flex; gap:10px; margin-top:12px; align-items:center}
+    .btn{border:1px solid #d1d5db; background:#f8fafc; color:#1f2937;
+      padding:10px 14px; border-radius:12px; font-weight:700; cursor:pointer;}
+    .btn.primary{background:var(--ink); color:#fff; border-color:var(--ink);
+      box-shadow:0 0 0 3px rgba(122,134,255,.25)}
+    .count{margin-left:auto; color:#475569; font-weight:700}
+
+    /* Grid */
+    .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+    @media (max-width: 980px){ .grid{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width: 520px){ .grid{grid-template-columns:1fr} }
+    .card{background:#f3f4ff; border:1px solid #e5e7eb; border-radius:12px; overflow:hidden;
+      aspect-ratio:1/1; position:relative; cursor:zoom-in}
+    .card img{width:100%; height:100%; object-fit:cover; display:block}
+    .cap{
+      position:absolute; left:8px; bottom:8px; right:8px;
+      background:#ffffffea; border:1px solid #e5e7eb; border-radius:10px;
+      padding:6px 8px; font-size:12px; color:#1f2473; font-weight:700;
+    }
+
+    /* Lightbox overlay */
+    .lightbox{
+      position:fixed; inset:0; background:rgba(255, 255, 255, 0.75);
+      display:none; z-index:200; /*backdrop-filter: blur(1px);*/
+    }
+    .lightbox[aria-hidden="false"]{display:grid; place-items:center}
+    .lb-inner{
+      position:relative; width:min(96vw,1100px); height:min(90vh,80vw);
+      background:#000; border-radius:16px; overflow:hidden; box-shadow:var(--shadow);
+      border:1px solid rgba(255,255,255,.12)
+    }
+    .lb-img{position:absolute; inset:0; width:100%; height:100%; object-fit:contain; background:#000}
+    .lb-ui{
+      position:absolute; inset:auto 0 0 0; display:flex; align-items:center; gap:10px;
+      padding:10px 14px; background:linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.55) 40%, rgba(0,0,0,.75) 100%);
+      color:#fff; font-weight:700;
+    }
+    .lb-cap{flex:1; padding-right:8px}
+    .lb-count{font-variant-numeric:tabular-nums}
+    .lb-btn{
+      position:absolute; top:50%; transform:translateY(-50%);
+      width:48px; height:56px; border-radius:12px; background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.2); color:#fff; font-size:24px; display:grid; place-items:center; cursor:pointer;
+      box-shadow:0 6px 20px rgba(0,0,0,.3);
+    }
+    .lb-btn:hover{background:rgba(255,255,255,.2)}
+    .lb-prev{left:10px}
+    .lb-next{right:10px}
+    .lb-close{
+      position:absolute; top:10px; right:10px; width:40px; height:40px; border-radius:10px;
+      background:#fff; color:#0f172a; border:1px solid #e5e7eb; display:grid; place-items:center; cursor:pointer; font-weight:900;
+    }
+  </style>
+
+  <!-- Load your data BEFORE our script -->
+  <script src="../data.js"></script>
+  <script>
+    // normalize types to your folder names
+    function normalizeType(val){
+      const map = { neurodermatitis:'neuro' };
+      return map[val] || val;
+    }
+    // Fallback path builder (gallery lives in /pages/, images in /images/eczema/)
+    function fallbackGetImagePath({type, region, tone, severity}) {
+      const t = normalizeType(type);
+      return `../images/eczema/${t}/${t}-${region}-${tone}-${severity}.jpg`;
+    }
+    // If data.js (or another script) didn’t define getImagePath, provide one.
+    if (typeof window.getImagePath !== 'function') {
+      window.getImagePath = (args) => fallbackGetImagePath(args);
+    }
+  </script>
+  
+</head>
+<body>
+  <!-- Header (same pattern as compare page) -->
+  <header class="white-header">
+    <div class="logo">
+      <a href="../index.html"><img src="../images/logo.png" alt="Tono Logo"></a>
+    </div>
+    <div class="menu-icon" id="menuIcon"><span></span><span></span><span></span></div>
+  </header>
+
+  <!-- Full Screen Menu -->
+  <div id="fullScreenMenu" class="full-screen-menu">
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../pages/viewer.html">Eczema Visualizer</a>
+      <a href="../learn.html">Learn About Eczema</a>
+      <a href="../pages/resources.html">Resources</a>
+      <a href="../pages/about.html">About Us</a>
+      <a href="../pages/gallery.html" aria-current="page">Image Gallery</a>
+    </nav>
+  </div>
+
+  <!-- Breadcrumb -->
+  <section class="breadcrumb">
+    <p>
+      <a href="../index.html"><img src="../images/home-icon.png" alt="Home Icon" class="home-icon"></a> > Image gallery
+    </p>
+  </section>
+
+  <div class="wrap">
+    <h1>Image Gallery</h1>
+    <p class="lede">Browse every TONO image. Use filters to narrow by eczema type, severity, skin tone, and body part.</p>
+
+    <div class="panel" aria-label="Filters">
+      <div class="filters">
+        <div class="filter" id="fType" aria-expanded="false">
+          <button type="button" data-toggle>Type of Eczema <span>▾</span></button>
+          <div class="menu" role="menu"></div>
+        </div>
+        <div class="filter" id="fSeverity" aria-expanded="false">
+          <button type="button" data-toggle>Severity <span>▾</span></button>
+          <div class="menu" role="menu"></div>
+        </div>
+        <div class="filter" id="fTone" aria-expanded="false">
+          <button type="button" data-toggle>Skin Tone <span>▾</span></button>
+          <div class="menu" role="menu"></div>
+        </div>
+        <div class="filter" id="fBody" aria-expanded="false">
+          <button type="button" data-toggle>Body Part <span>▾</span></button>
+          <div class="menu" role="menu"></div>
+        </div>
+      </div>
+
+      <div class="chips" id="chips" aria-live="polite" aria-atomic="true"></div>
+
+      <div class="actions">
+        <button class="btn primary" id="apply">Filter</button>
+        <button class="btn" id="reset">Reset</button>
+        <div class="count" id="resultCount">0 images</div>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:16px">
+      <div class="grid" id="grid" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <!-- Lightbox overlay -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" aria-modal="true" role="dialog">
+    <div class="lb-inner">
+      <img class="lb-img" id="lbImg" alt="">
+      <button class="lb-btn lb-prev" id="lbPrev" aria-label="Previous image">‹</button>
+      <button class="lb-btn lb-next" id="lbNext" aria-label="Next image">›</button>
+      <button class="lb-close" id="lbClose" aria-label="Close">×</button>
+      <div class="lb-ui">
+        <div class="lb-cap" id="lbCap"></div>
+        <div class="lb-count" id="lbCount">1/1</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* -----------------------------
+       1) DATA / FALLBACKS
+       ----------------------------- */
+    const TONES = (window.TONES) || ['light','medium','olive','dark'];
+    const SEVERITIES = (window.SEVERITIES) || ['normal','mild','moderate','severe'];
+    const TYPES = ['atopic','contact','seborrheic','stasis','neuro','nummular','dyshidrotic'];
+
+    function listAllImages(){
+      if (Array.isArray(window.eczemaImages) && window.eczemaImages.length){
+        return window.eczemaImages.map(x => ({
+          src: (x.src || (typeof getImagePath === 'function'
+               ? getImagePath({type:x.type, region:x.region, tone:x.tone, severity:x.severity})
+               : '')),
+          type: x.type, tone: x.tone, severity: x.severity, region: x.region
+        }));
+      }
+      const fallback = [
+        ['atopic','face-neck'], ['seborrheic','scalp'], ['contact','face'], ['neuro','neck'],
+        ['atopic','flexural-fold-elbow'],['seborrheic','face'], ['contact','hand'], ['neuro','wrists'], ['nummular','arms'],
+        ['stasis','ankles'], ['stasis','shins'], ['nummular','legs'], ['dyshidrotic','soles']
+      ];
+      const out = [];
+      fallback.forEach(([type,region])=>{
+        TONES.forEach(tone=>{
+          SEVERITIES.forEach(sev=>{
+            const src = (typeof getImagePath === 'function')
+              ? getImagePath({type, region, tone, severity:sev})
+              : '';
+            out.push({src, type, tone, severity:sev, region});
+          });
+        });
+      });
+      return out;
+    }
+    function regionToBody(region){
+      const head = ['face','face-neck','scalp','neck'];
+      const upper = ['hand','hands','wrists','arms','flexural-fold-elbow','palms'];
+      const lower = ['legs','shins','ankles','soles','feet','foot'];
+      if (head.includes(region)) return 'head';
+      if (upper.includes(region)) return 'upper';
+      if (lower.includes(region)) return 'lower';
+      return 'upper';
+    }
+    function titleCase(s){ return (s||'').replace(/(^|[-_])/g,' ').replace(/\b\w/g,c=>c.toUpperCase()).trim(); }
+    function niceType(t){
+      return ({
+        atopic:'Atopic Dermatitis', contact:'Contact Dermatitis', seborrheic:'Seborrheic Dermatitis',
+        stasis:'Stasis Dermatitis', neuro:'Neurodermatitis', nummular:'Nummular Dermatitis',
+        dyshidrotic:'Dyshidrotic Eczema'
+      })[t] || titleCase(t);
+    }
+
+    const ALL = listAllImages();
+
+    /* -----------------------------
+       2) FILTER STATE
+       ----------------------------- */
+    const state = { types:new Set(), sevs:new Set(), tones:new Set(), bodies:new Set() };
+
+    /* -----------------------------
+       3) DOM REFS
+       ----------------------------- */
+    const el = {
+      grid: document.getElementById('grid'),
+      chips: document.getElementById('chips'),
+      fType: document.querySelector('#fType .menu'),
+      fSeverity: document.querySelector('#fSeverity .menu'),
+      fTone: document.querySelector('#fTone .menu'),
+      fBody: document.querySelector('#fBody .menu'),
+      resultCount: document.getElementById('resultCount'),
+      lightbox: document.getElementById('lightbox'),
+      lbImg: document.getElementById('lbImg'),
+      lbCap: document.getElementById('lbCap'),
+      lbCount: document.getElementById('lbCount'),
+      lbPrev: document.getElementById('lbPrev'),
+      lbNext: document.getElementById('lbNext'),
+      lbClose: document.getElementById('lbClose')
+    };
+
+    /* -----------------------------
+       4) BUILD DROPDOWNS
+       ----------------------------- */
+    function makeOpt({label, value, bucket, iconHTML}){
+      const div = document.createElement('label');
+      div.className = 'opt';
+      div.innerHTML = `
+        <input type="checkbox" value="${value}" data-bucket="${bucket}">
+        ${iconHTML || ''}<span>${label}</span>
+      `;
+      div.querySelector('input').addEventListener('change', (e)=>{
+        const set = state[bucket];
+        if (e.target.checked) set.add(value); else set.delete(value);
+        renderChips();
+      });
+      return div;
+    }
+
+    const TYPES_LIST = TYPES;
+    TYPES_LIST.forEach(t => el.fType.appendChild(makeOpt({label:niceType(t), value:t, bucket:'types'})));
+    SEVERITIES.forEach(s => el.fSeverity.appendChild(makeOpt({label:titleCase(s), value:s, bucket:'sevs'})));
+    TONES.forEach(t => {
+      const icon = `<span class="sw" data-tone="${t}" aria-hidden="true"></span>`;
+      el.fTone.appendChild(makeOpt({label:titleCase(t), value:t, bucket:'tones', iconHTML:icon}));
+    });
+    [
+      {label:'Head', value:'head'},
+      {label:'Upper body', value:'upper'},
+      {label:'Lower body', value:'lower'}
+    ].forEach(b => el.fBody.appendChild(makeOpt({label:b.label, value:b.value, bucket:'bodies'})));
+
+    document.querySelectorAll('.filter').forEach(f=>{
+      const btn = f.querySelector('[data-toggle]');
+      btn.addEventListener('click', ()=>{
+        const open = f.getAttribute('aria-expanded') === 'true';
+        document.querySelectorAll('.filter').forEach(o=>o.setAttribute('aria-expanded','false'));
+        f.setAttribute('aria-expanded', String(!open));
+      });
+    });
+    window.addEventListener('click', (e)=>{
+      if (!e.target.closest('.filter')) {
+        document.querySelectorAll('.filter').forEach(o=>o.setAttribute('aria-expanded','false'));
+      }
+    });
+
+    /* -----------------------------
+       5) CHIPS + GRID + COUNTS
+       ----------------------------- */
+    function renderChips(){
+      const parts = [];
+      if (state.types.size)   parts.push(...[...state.types].map(v=>({bucket:'types', v, label:niceType(v)})));
+      if (state.sevs.size)    parts.push(...[...state.sevs].map(v=>({bucket:'sevs', v, label:titleCase(v)})));
+      if (state.tones.size)   parts.push(...[...state.tones].map(v=>({bucket:'tones', v, label:titleCase(v)})));
+      if (state.bodies.size)  parts.push(...[...state.bodies].map(v=>({bucket:'bodies', v,
+                                 label: v==='head'?'Head':v==='upper'?'Upper body':'Lower body'})));
+
+      el.chips.innerHTML = '';
+      parts.forEach(p=>{
+        const c = document.createElement('span');
+        c.className = 'chip';
+        c.innerHTML = `${p.label} <button aria-label="Remove ${p.label}">×</button>`;
+        c.querySelector('button').addEventListener('click', ()=>{
+          state[p.bucket].delete(p.v);
+          const box = document.querySelector(`.menu input[value="${p.v}"][data-bucket="${p.bucket}"]`);
+          if (box) box.checked = false;
+          renderChips();
+        });
+        el.chips.appendChild(c);
+      });
+    }
+
+    // store last filtered list for lightbox navigation
+    let LAST_RESULTS = [];
+    function passFilters(item){
+      if (state.types.size   && !state.types.has(item.type)) return false;
+      if (state.sevs.size    && !state.sevs.has(item.severity)) return false;
+      if (state.tones.size   && !state.tones.has(item.tone)) return false;
+      const body = regionToBody(item.region);
+      if (state.bodies.size  && !state.bodies.has(body)) return false;
+      return true;
+    }
+    function captionOf(it){
+      return `${niceType(it.type)} • ${titleCase(it.region)} • ${titleCase(it.tone)} • ${titleCase(it.severity)}`;
+    }
+
+    function renderGrid(){
+      const list = ALL.filter(passFilters);
+      LAST_RESULTS = list; // keep for lightbox
+      el.grid.innerHTML = '';
+      el.resultCount.textContent = `${list.length} ${list.length===1?'image':'images'}`;
+
+      if (!list.length){
+        const p = document.createElement('p');
+        p.className = 'muted'; p.textContent = 'No results for these filters.';
+        el.grid.appendChild(p); return;
+      }
+      list.forEach((it, idx)=>{
+        const card = document.createElement('div');
+        card.className = 'card'; card.dataset.idx = idx;
+        const img = document.createElement('img');
+        const alt = `${it.type}, ${it.region}, ${it.tone} tone, ${it.severity} severity`;
+        img.alt = alt; img.src = it.src || '';
+        const cap = document.createElement('div'); cap.className = 'cap'; cap.textContent = captionOf(it);
+        card.appendChild(img); card.appendChild(cap);
+        card.addEventListener('click', ()=> openLightbox(idx));
+        el.grid.appendChild(card);
+      });
+    }
+
+    /* -----------------------------
+       6) LIGHTBOX (fullscreen viewer)
+       ----------------------------- */
+    let lbIndex = 0;
+    function updateLightbox(){
+      if (!LAST_RESULTS.length) return;
+      const it = LAST_RESULTS[lbIndex];
+      el.lbImg.src = it.src || '';
+      el.lbImg.alt = `${it.type}, ${it.region}, ${it.tone} tone, ${it.severity} severity`;
+      el.lbCap.textContent = captionOf(it);
+      el.lbCount.textContent = `${lbIndex+1}/${LAST_RESULTS.length}`;
+    }
+    function openLightbox(idx){
+      lbIndex = idx;
+      el.lightbox.setAttribute('aria-hidden','false');
+      updateLightbox();
+      // focus next button for keyboard nav
+      setTimeout(()=> el.lbNext.focus(), 0);
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox(){
+      el.lightbox.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+    }
+    function next(){ lbIndex = (lbIndex + 1) % LAST_RESULTS.length; updateLightbox(); }
+    function prev(){ lbIndex = (lbIndex - 1 + LAST_RESULTS.length) % LAST_RESULTS.length; updateLightbox(); }
+
+    el.lbNext.addEventListener('click', next);
+    el.lbPrev.addEventListener('click', prev);
+    el.lbClose.addEventListener('click', closeLightbox);
+    el.lightbox.addEventListener('click', (e)=>{ if (e.target === el.lightbox) closeLightbox(); });
+    window.addEventListener('keydown', (e)=>{
+      if (el.lightbox.getAttribute('aria-hidden') === 'false'){
+        if (e.key === 'ArrowRight') next();
+        if (e.key === 'ArrowLeft') prev();
+        if (e.key === 'Escape') closeLightbox();
+      }
+    });
+
+    /* -----------------------------
+       7) BOOT + BUTTONS
+       ----------------------------- */
+    document.getElementById('apply').addEventListener('click', renderGrid);
+    document.getElementById('reset').addEventListener('click', ()=>{
+      ['types','sevs','tones','bodies'].forEach(k=>state[k].clear());
+      document.querySelectorAll('.menu input[type="checkbox"]').forEach(b=> b.checked=false);
+      renderChips(); renderGrid();
+    });
+
+    renderChips();
+    renderGrid();
+  </script>
+  
+</body>
+</html>

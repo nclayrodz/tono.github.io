@@ -1,0 +1,215 @@
+<!-- viewer test -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eczema Visualizer</title>
+  <link rel="stylesheet" href="../styles.css/main.css">
+  <link rel="stylesheet" href="../styles.css/viewer.css">
+  <link rel="stylesheet" href="../styles.css/tester.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="white-header">
+    <div class="logo">
+            <a href="../index.html">
+            <img src="../images/logo.png" alt= "Tono Logo">
+        </a>
+        </div>
+  <div class="menu-icon" id="menuIcon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</header>
+
+<!-- Full Screen Menu -->
+<div id="fullScreenMenu" class="full-screen-menu">
+  <nav>
+    <a href="../index.html">Home</a>
+    <a href="../pages/viewer.html">Eczema Visualizer</a>
+    <a href="../learn.html">Learn About Eczema</a>
+    <a href="../pages/resources.html">Resources</a>
+    <a href="../pages/about.html">About Us</a>
+    <a href="../pages/gallery.html">Image Gallery</a>
+  </nav>
+</div>
+
+<!-- Breadcrumb -->
+<section class="breadcrumb">
+  <p>
+    <a href="../index.html">
+      <img src="../images/home-icon.png" alt="Home Icon" class="home-icon">
+    </a> 
+    > Eczema Visualizer
+  </p>
+</section>
+
+<!-- Visualizer -->
+<section class="visualizer">
+  <h2>Eczema Visualizer</h2>
+  <p>Select the type of eczema you would like to view</p>
+
+  <div class="custom-dropdown" id="eczemaDropdown">
+    <div class="dropdown-selected">Select Type of Eczema</div>
+    <div class="dropdown-options">
+      <div data-value="atopic">Atopic Dermatitis</div>
+      <div data-value="contact">Contact Dermatitis</div>
+      <div data-value="dyshidrotic">Dyshidrotic Eczema</div>
+      <div data-value="neurodermatitis">Neurodermatitis</div>
+      <div data-value="nummular">Nummular Eczema</div>
+      <div data-value="seborrheic">Seborrheic Dermatitis</div>
+      <div data-value="stasis">Stasis Dermatitis</div>
+    </div>
+  </div>
+  
+
+  <div class="image-area">
+    <img src="../images/eczema-images/placeholder.png" alt="Visualizer Image" id="visualizerImage" class="main-image">
+    <button id="toggleComparison" class="compare-access-btn">
+        <img src="assets/icons/compare-icon.svg" alt="Compare Tool" />
+      </button>
+    
+  </div>
+  <div id="comparisonContainer" class="comparison-container" style="display: none;">
+    <!-- IMAGES -->
+    <div class="comparison-images">
+      <div class="image-wrapper">
+        <img id="comparisonImageA" src="../images/eczema-images/placeholder.png" alt="Image A">
+      </div>
+      <div class="image-wrapper">
+        <img id="comparisonImageB" src="../images/eczema-images/second-placeholder.png" alt="Image B">
+      </div>
+    </div>
+  
+    <!-- CONTROLS -->
+    <div class="comparison-controls-split">
+      <!-- Panel A (read-only or editable if you prefer) -->
+      <div class="control-panel panel-a">
+        <h3>Image A: Last Viewed</h3>
+        <!-- If you'd like to show the user what this image represents, display skin tone/severity/region here -->
+      </div>
+  
+      <!-- Panel B -->
+      <div class="control-panel panel-b">
+        <h3>Image B: Customize</h3>
+        <!-- Place the eczema type dropdown, swatches, severity buttons, and region buttons here -->
+        <div class="custom-dropdown" id="eczemaDropdownB"> ... </div>
+
+        <div class="skin-tone">
+          <h4>Select Skin Tone</h4>
+          <div class="swatches" id="skinTonesB"> ... </div>
+        </div>
+      
+        <div class="severity">
+          <h4>Select Severity</h4>
+          <div class="severity-buttons" id="severitiesB"> ... </div>
+        </div>
+      
+        <div class="region">
+          <h4>Region</h4>
+          <div class="region-buttons" id="regionsB"> ... </div>
+        </div>
+      </div>
+      <div class="slider-wrapper">
+        <div class="slider-image-container">
+          <img id="sliderImageA" src="../images/eczema-images/placeholder.png" />
+          <div class="slider-overlay">
+            <img id="sliderImageB" src="../images/eczema-images/second-placeholder.png" />
+          </div>
+          <input type="range" min="0" max="100" value="50" id="sliderControl" />
+        </div>
+      </div>
+      
+    </div>
+  
+    <button id="exitComparison" class="exit-comparison">Remove Comparison ❌</button>
+  </div>
+  
+
+  <div class="skin-tone">
+    <h3>Select Skin Tone</h3>
+    <div class="swatches" id="skinTones">
+      <div class="swatch light" data-tone="light"></div>
+      <div class="swatch olive" data-tone="olive"></div>
+      <div class="swatch medium" data-tone="medium"></div>
+      <div class="swatch dark" data-tone="dark"></div>
+    </div>
+  </div>
+
+  <div class="severity">
+    <h3>Select Severity</h3>
+    <div class="severity-buttons" id="severities">
+      <button class="severity-btn" data-severity="normal">Normal</button>
+      <button class="severity-btn" data-severity="mild">Mild</button>
+      <button class="severity-btn" data-severity="moderate">Moderate</button>
+      <button class="severity-btn" data-severity="severe">Severe</button>
+    </div>
+  </div>
+
+  <div class="region">
+    <h3>Region</h3>
+    <div class="region-buttons" id="regions">
+      <button class="region-btn" data-region="face-neck">Face and Neck</button>
+      <button class="region-btn" data-region="flexural-fold-elbow">Flexural Fold-Elbow</button>
+    </div>
+  </div>
+</section>
+<section class="tab-section">
+  <div class="tab-buttons">
+    <button class="tab-btn active" data-tab="about">About the Condition</button>
+    <button class="tab-btn" data-tab="differential">Differential Diagnosis</button>
+  </div>
+
+  <div class="tab-content">
+    <div class="tab-panel active" id="about">
+      <h3>Condition</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...</p>
+
+      <h4>Symptoms</h4>
+      <ul>
+        <li>Lorem ipsum</li>
+        <li>Lorem ipsum</li>
+        <li>Lorem ipsum</li>
+        <li>Lorem ipsum</li>
+        <li>Lorem ipsum</li>
+      </ul>
+    </div>
+
+    <div class="tab-panel" id="differential">
+      <h3>Differential Diagnosis</h3>
+      <p>Placeholder information for differential diagnosis...</p>
+
+      <h4>Possible Conditions</h4>
+      <ul>
+        <li>Condition 1</li>
+        <li>Condition 2</li>
+        <li>Condition 3</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Back to Top -->
+<div class="back-to-top">
+  <a href="#">Back to top &#x25B2;</a>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-item">Lorem ipsum</div>
+  <div class="footer-item">Lorem ipsum</div>
+  <div class="footer-item">Lorem ipsum</div>
+</footer>
+
+<script src="../script.js/data.js"></script>
+<script src="../script.js/conditionContent.js"></script>
+<script src="../script.js/tester.js"></script>
+
+
+</body>
+</html>
+
+ 

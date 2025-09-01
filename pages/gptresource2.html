@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>TONO • Learning</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../styles.css/main.css">
+  <link rel="stylesheet" href="../styles.css/viewer.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    .wrap{max-width:1100px; margin:32px auto; padding:16px}
+    h1{font-size:24px; color:#1f2473; margin:8px 0 16px}
+    .lede{max-width:680px; line-height:1.6; color:#334155; margin-bottom:24px}
+    .panel{background:#fff; border-radius:18px; box-shadow:0 8px 24px rgba(31,36,115,.12); padding:16px; border:1px solid #e5e7eb; margin-bottom:20px}
+    .card{background:#f9f9f9; border:1px solid #e5e7eb; border-radius:12px; padding:14px; margin-bottom:12px}
+    .quiz .opt{padding:10px; border:1px solid #ccc; border-radius:8px; margin:6px 0; cursor:pointer}
+    .quiz .opt[data-state="correct"]{background:#dcfce7; border-color:#22c55e}
+    .quiz .opt[data-state="wrong"]{background:#fee2e2; border-color:#ef4444}
+    .accordion{border:1px solid #e5e7eb; border-radius:12px; overflow:hidden}
+    .accordion-item + .accordion-item{border-top:1px solid #e5e7eb}
+    .accordion-trigger{width:100%; text-align:left; background:#f8fafc; color:#1f2473; padding:12px 14px; border:0; cursor:pointer; font-weight:600; display:flex; justify-content:space-between; align-items:center}
+    .accordion-content{max-height:0; overflow:hidden; transition:max-height .35s ease}
+    .accordion-item.open .accordion-content{max-height:500px}
+    .badge{display:inline-block; padding:.25rem .5rem; border-radius:999px; background:#eef2ff; color:#1f2473; font-weight:700; font-size:12px; margin-left:6px}
+  </style>
+</head>
+<body>
+
+<header class="white-header">
+  <div class="logo">
+    <a href="../index.html">
+      <img src="../images/logo.png" alt="Tono Logo">
+    </a>
+  </div>
+  <div class="menu-icon" id="menuIcon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</header>
+
+<div id="fullScreenMenu" class="full-screen-menu">
+  <nav>
+    <a href="../index.html">Home</a>
+    <a href="../pages/viewer.html">Eczema Visualizer</a>
+    <a href="../learn.html">Learn About Eczema</a>
+    <a href="../pages/resources.html">Resources</a>
+    <a href="../pages/about.html">About Us</a>
+    <a href="../pages/gallery.html">Image Gallery</a>
+  </nav>
+</div>
+
+<section class="breadcrumb">
+  <p>
+    <a href="../index.html">
+      <img src="../images/home-icon.png" alt="Home Icon" class="home-icon">
+    </a> > Learning
+  </p>
+</section>
+
+<div class="wrap">
+  <h1>Learning Module</h1>
+  <p class="lede">Explore how eczema presents across skin tones, severities, and regions. This section mirrors the style of the comparison tool but adds interactive lessons, accordion explanations, and quizzes.</p>
+
+  <div class="panel">
+    <h2>Recognition Across Skin Tones</h2>
+    <p class="muted">Core signs like erythema and scaling look different depending on skin tone. Adjust the controls to see variations.</p>
+    <div class="image-area">
+      <img src="../images/eczema-images/placeholder.png" alt="Recognition Example" class="main-image">
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Common Regional Patterns</h2>
+    <div class="accordion">
+      <div class="accordion-item">
+        <button class="accordion-trigger">Atopic Dermatitis • Face/Neck <span class="badge">AAD</span></button>
+        <div class="accordion-content">
+          <div class="card">Subtle erythema or lichenification around eyes and mouth. More texture-based cues in darker tones.</div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-trigger">Atopic Dermatitis • Flexural folds <span class="badge">NEA</span></button>
+        <div class="accordion-content">
+          <div class="card">Pruritic patches in the elbows; rubbing causes thickened skin. Important to differentiate from contact triggers.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Skin of Color Considerations</h2>
+    <div class="card">On darker tones, erythema may appear purple, gray, or ashen instead of bright red. Post-inflammatory hyperpigmentation is common and should not be mistaken for active flare. <span class="badge">Skin of Color Society</span></div>
+    <div class="card">Scaling may appear lighter (ashy) on dark skin, requiring careful texture evaluation. <span class="badge">DermNet</span></div>
+  </div>
+
+  <div class="panel">
+    <h2>Quick Quiz</h2>
+    <div class="quiz" data-qid="q1" data-answer="b">
+      <p>On darker skin tones, erythema may appear…</p>
+      <div class="opt" data-choice="a">Bright red only</div>
+      <div class="opt" data-choice="b">Purple, gray, or ashen</div>
+      <div class="opt" data-choice="c">Greenish</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.accordion-trigger').forEach(btn=>btn.addEventListener('click',()=>{
+    const item = btn.closest('.accordion-item');
+    item.classList.toggle('open');
+  }));
+
+  document.querySelectorAll('.quiz').forEach(block => {
+    block.addEventListener('click', e => {
+      const opt = e.target.closest('.opt');
+      if(!opt) return;
+      const answer = block.dataset.answer;
+      opt.dataset.state = opt.dataset.choice === answer ? 'correct' : 'wrong';
+    });
+  });
+</script>
+
+</body>
+</html>

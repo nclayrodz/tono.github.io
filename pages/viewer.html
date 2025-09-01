@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eczema Visualizer</title>
+  <link rel="stylesheet" href="../styles.css/main.css">
+  <link rel="stylesheet" href="../styles.css/viewer.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<header class="white-header">
+    <div class="logo">
+            <a href="../index.html">
+            <img src="../images/logo.png" alt= "Tono Logo">
+        </a>
+        </div>
+  <div class="menu-icon" id="menuIcon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</header>
+
+<!-- Full Screen Menu -->
+<div id="fullScreenMenu" class="full-screen-menu">
+  <nav>
+    <a href="../index.html">Home</a>
+    <a href="../pages/viewer.html">Eczema Visualizer</a>
+    <a href="../learn.html">Learn About Eczema</a>
+    <a href="../pages/resources.html">Resources</a>
+    <a href="../pages/about.html">About Us</a>
+    <a href="../pages/gallery2.html">Image Gallery</a>
+  </nav>
+</div>
+
+<!-- Breadcrumb -->
+<section class="breadcrumb">
+  <p>
+    <a href="../index.html">
+      <img src="../images/home-icon.png" alt="Home Icon" class="home-icon">
+    </a> 
+    > Eczema Visualizer
+  </p>
+</section>
+
+<!-- Visualizer -->
+<section class="visualizer">
+  <h2>Eczema Visualizer</h2>
+  <p>Select the type of eczema you would like to view</p>
+
+  <div class="custom-dropdown" id="eczemaDropdown">
+    <div class="dropdown-selected">Select Type of Eczema</div>
+    <div class="dropdown-options">
+      <div data-value="atopic">Atopic Dermatitis</div>
+      <div data-value="contact">Contact Dermatitis</div>
+      <div data-value="dyshidrotic">Dyshidrotic Eczema</div>
+      <div data-value="neurodermatitis">Neurodermatitis</div>
+      <div data-value="nummular">Nummular Eczema</div>
+      <div data-value="seborrheic">Seborrheic Dermatitis</div>
+      <div data-value="stasis">Stasis Dermatitis</div>
+    </div>
+  </div>
+  
+
+  <div class="image-area">
+    <img src="../images/eczema-images/placeholder.png" alt="Visualizer Image" id="visualizerImage"  class="main-image">
+    <!-- Image meta badge -->
+    <div id="imageMeta" class="image-meta-card" aria-live="polite">
+        <!-- filled by JS -->
+    </div>
+    <button id="compareBtn" class="tono-btn">Compare</button>
+    <!---a href="comparison.html" class="compare-access-btn" onclick="saveCurrentImage()"--->
+      <!--img src="assets/icons/compare-icon.svg" alt="Compare Tool" /--->
+  </div>
+
+  <div class="skin-tone">
+    <h3>Select Skin Tone</h3>
+    <div class="swatches" id="skinTones" role="radiogroup" aria-label="Skin tone">
+      <div class="swatch light" data-tone="light" role="radio" aria-checked="false">
+        <div class="checkbox-wrapper-12">
+          <div class="cbx">
+            <input type="checkbox" id="tone-light" aria-label="Light skin tone">
+            <label for="tone-light"></label>
+            <svg fill="none" viewBox="0 0 15 14" height="14" width="15"><path d="M2 8.36364L6.23077 12L13 2"></path></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="swatch olive" data-tone="olive" role="radio" aria-checked="false">
+        <div class="checkbox-wrapper-12">
+          <div class="cbx">
+            <input type="checkbox" id="tone-olive" aria-label="Olive skin tone">
+            <label for="tone-olive"></label>
+            <svg fill="none" viewBox="0 0 15 14" height="14" width="15"><path d="M2 8.36364L6.23077 12L13 2"></path></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="swatch medium" data-tone="medium" role="radio" aria-checked="false">
+        <div class="checkbox-wrapper-12">
+          <div class="cbx">
+            <input type="checkbox" id="tone-medium" aria-label="Medium skin tone">
+            <label for="tone-medium"></label>
+            <svg fill="none" viewBox="0 0 15 14" height="14" width="15"><path d="M2 8.36364L6.23077 12L13 2"></path></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="swatch dark" data-tone="dark" role="radio" aria-checked="false">
+        <div class="checkbox-wrapper-12">
+          <div class="cbx">
+            <input type="checkbox" id="tone-dark" aria-label="Dark skin tone">
+            <label for="tone-dark"></label>
+            <svg fill="none" viewBox="0 0 15 14" height="14" width="15"><path d="M2 8.36364L6.23077 12L13 2"></path></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Goo filter defs -->
+<svg aria-hidden="true" width="0" height="0">
+  <defs>
+    <filter id="goo-12">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
+      <feColorMatrix in="blur" mode="matrix" result="goo-12"
+        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -7" />
+      <feBlend in="SourceGraphic" in2="goo-12" />
+    </filter>
+  </defs>
+</svg>
+
+  <div class="severity">
+    <h3>Select Severity</h3>
+    <div class="severity-buttons" id="severities">
+      <button class="severity-btn" data-severity="normal">Normal</button>
+      <button class="severity-btn" data-severity="mild">Mild</button>
+      <button class="severity-btn" data-severity="moderate">Moderate</button>
+      <button class="severity-btn" data-severity="severe">Severe</button>
+    </div>
+  </div>
+
+  <div class="region">
+    <h3>Region</h3>
+    <div class="region-buttons" id="regions">
+      <button class="region-btn" data-region="face-neck">Face and Neck</button>
+      <button class="region-btn" data-region="flexural-fold-elbow">Flexural Fold-Elbow</button>
+    </div>
+  </div>
+</section>
+<section class="tab-section">
+  <div class="tab-buttons">
+    <button class="tab-btn active" data-tab="about">About the Condition</button>
+    <button class="tab-btn" data-tab="differential">Differential Diagnosis</button>
+  </div>
+
+  <div class="tab-content">
+    <div class="tab-panel active" id="about">
+      <h3>Condition</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...</p>
+
+      <h4>Symptoms</h4>
+      <ul>
+        <li>Lorem ipsum</li>
+        <li>Lorem ipsum</li>
+        <li>Lorem ipsum</li>
+        <li>Lorem ipsum</li>
+        <li>Lorem ipsum</li>
+      </ul>
+    </div>
+
+    <div class="tab-panel" id="differential">
+      <h3>Differential Diagnosis</h3>
+      <p>Placeholder information for differential diagnosis...</p>
+
+      <h4>Possible Conditions</h4>
+      <ul>
+        <li>Condition 1</li>
+        <li>Condition 2</li>
+        <li>Condition 3</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Back to Top -->
+<div class="back-to-top">
+  <a href="#">Back to top &#x25B2;</a>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-item">Lorem ipsum</div>
+  <div class="footer-item">Lorem ipsum</div>
+  <div class="footer-item">Lorem ipsum</div>
+</footer>
+
+<!--script>
+  /* ------- TONO Compare: viewer → compare.html -------
+  
+  Assumptions:
+  - Your viewer already tracks the current image as:
+      state = { type, region, tone, severity }
+    If you don't have a single object, this helper also falls back to reading
+    from common control IDs/data attributes. Adjust the selectors in MAPPING.
+  
+  - compare.html is the comparison page I gave you earlier.
+  
+  ---------------------------------------------------- */
+  
+  (function(){
+    // 1) If you already have a state object, set this to true and
+    //    set WHERE_STATE_LIVES to your object (e.g., window.viewerState)
+    const USE_EXISTING_STATE = !!window.state;     // change if needed
+    const WHERE_STATE_LIVES  = window.state;       // e.g., window.viewerState
+  
+    // 2) If you DON'T have a single state object, map your control selectors here.
+    //    Edit these to match your viewer’s dropdowns/buttons.
+    const MAPPING = {
+      type:    '#typeSelect',          // <select id="typeSelect">atopic/contact/...</select>
+      region:  '#regionSelect',        // <select id="regionSelect">face-neck/...</select>
+      tone:    '[data-tone].is-active',// e.g. <button data-tone="dark" class="is-active">
+      severity:'[data-severity].is-active' // e.g. <button data-severity="mild" class="is-active">
+    };
+  
+    function readFromDOM(){
+      const getVal = (sel)=> {
+        const el = document.querySelector(sel);
+        if (!el) return null;
+        // select, input
+        if ('value' in el) return el.value;
+        // buttons/chips
+        return el.dataset.tone || el.dataset.severity || el.dataset.value || el.getAttribute('data-value');
+      };
+  
+      return {
+        type:     getVal(MAPPING.type)     || 'atopic',
+        region:   getVal(MAPPING.region)   || 'face-neck',
+        tone:     getVal(MAPPING.tone)     || 'dark',
+        severity: getVal(MAPPING.severity) || 'normal'
+      };
+    }
+  
+    function getCurrentSelection(){
+      if (USE_EXISTING_STATE && WHERE_STATE_LIVES) {
+        const { type, region, tone, severity } = WHERE_STATE_LIVES;
+        return { type, region, tone, severity };
+      }
+      return readFromDOM();
+    }
+  
+    // 3) Wire the button
+    const btn = document.getElementById('compareBtn');
+    if (!btn) return;
+  
+    btn.addEventListener('click', () => {
+      const currentSelection = getCurrentSelection();
+  
+      // Make selection available to the next page
+      window.viewerSelection = { ...currentSelection };
+  
+      // Navigate (same tab). Change path if your file lives elsewhere.
+      window.location.href = './compare.html';
+    });
+  })();
+  </script-->
+  
+<script src="../script.js/data.js"></script>
+<script src="../script.js/conditionContent.js"></script>
+<script src="../script.js/newviewer.js"></script>
+
+
+</body>
+</html>
+
+ 

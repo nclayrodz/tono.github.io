@@ -1,0 +1,558 @@
+  /*Text in Viewer Page*/
+  .visualizer h2,
+  .visualizer p,
+  .visualizer h3 {
+    text-align: center;
+  }
+  
+/*Viwer function*/
+
+  /* Skin Tone Swatches */
+/* Swatches */
+.swatches {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 1rem 0;
+}
+
+.swatch {
+  width: 96px;
+  height: 40px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 2px solid #ccc;
+}
+
+.swatch.light { background: #F7E7CE; }
+.swatch.olive { background: #D2A679; }
+.swatch.medium { background: #8B5C30; }
+.swatch.dark { background: #4B3621; }
+
+.swatches {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 1rem 0;
+}
+
+.swatch {
+  width: 96px;
+  height: 40px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 2px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15); /* Adds soft shadow */
+  position: relative; /* Needed for checkmark */
+  transition: all 0.3s ease;
+}
+  .swatch:hover {
+      transform: scale(1.05); /* Slightly enlarges on hover */
+  }
+  .swatch.selected {
+      border: 2px solid #614ede; /* Purple border when selected */
+    }
+    
+    /* Checkmark appearing */
+  .swatch.selected::after {
+      content: '\2713'; /* Unicode for checkmark */
+      color: white;
+      background-color: #614ede;
+      font-size: 16px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      position: absolute;
+      top: 7px;
+      right: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+/* Severity and Region Buttons */
+.severity-buttons, .region-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.region h3 {
+  margin-top: 2rem;
+}
+.severity h3 {
+  margin-top: 2rem;
+}
+
+
+.severity-btn, .region-btn {
+  padding: 0.5rem 1.5rem;
+  border: 2px solid #614ede;
+  background: white;
+  color: #614ede;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s, color 0.3s;
+}
+
+.severity-btn.selected, .region-btn.selected {
+  background: #614ede;
+  color: white;
+}
+
+/* Visualizer Image */
+.image-area {
+  margin: 2rem auto;
+  width: 90%;
+  max-width: 600px;
+  background: #ddd;
+  border: 3px solid #614ede;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  }
+  #visualizerImage {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 600px; /* Optional: limit max width */
+    border-radius: 5px;
+  }
+
+.main-image {
+  max-width: 100%;
+  border-radius: 10px;
+  border-color: #4656e0;
+}
+/* OG Custom dropdown style 
+.custom-dropdown {
+  position: relative;
+  width: 90%;
+  max-width: 400px;
+  margin: 1rem auto;
+  font-family: 'Inter', sans-serif;
+  box-shadow: 0 2px 8px rgba(131, 24, 253, 0.277);
+  border-radius: 10px;
+  
+}
+
+.dropdown-selected {
+  padding: 0.7rem 1rem;
+  border: 2px solid #614ede;
+  border-radius: 10px;
+  background: white;
+  cursor: pointer;
+  color: #333;
+  font-weight: bold;
+  position: relative;
+}
+
+.dropdown-selected::after {
+  content: "▼";
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.8rem;
+  color: #4656e0;
+}
+
+.dropdown-options {
+  display: none;
+  flex-direction: column;
+  border: 2px solid #614ede;
+  border-radius: 10px;
+  margin-top: 5px;
+  background: white;
+  overflow: hidden;
+  z-index: 100;
+  position: absolute;
+  width: 100%;
+}
+
+.dropdown-options div {
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.dropdown-options div:hover {
+  background: #eee;
+}
+
+/* When dropdown is active 
+.custom-dropdown.active .dropdown-options {
+  display: flex;
+}
+html {
+  scroll-behavior: smooth;
+}*/
+
+/* Custom dropdown style */
+.custom-dropdown {
+  position: relative;
+  width: 90%;
+  max-width: 400px;
+  margin: 1rem auto;
+  font-family: 'Inter', sans-serif;
+  box-shadow: 0 2px 8px rgba(131, 24, 253, 0.277);
+  border-radius: 10px;
+  z-index: 20; /* <-- added so it stacks above nearby content */
+}
+
+.dropdown-selected {
+  padding: 0.7rem 1rem;
+  border: 2px solid #614ede;
+  border-radius: 10px;
+  background: white;
+  cursor: pointer;
+  color: #333;
+  font-weight: bold;
+  position: relative;
+}
+
+.dropdown-selected::after {
+  content: "▼";
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.8rem;
+  color: #4656e0;
+}
+
+.dropdown-options {
+  display: none;
+  flex-direction: column;
+  border: 2px solid #614ede;
+  border-radius: 10px;
+  margin-top: 5px;
+  background: white;
+  overflow: hidden;
+  z-index: 9999;  /* <-- raised so it floats above everything */
+  position: absolute; /* <-- ensure it anchors to dropdown */
+  top: calc(100% + 4px); /* <-- drop below the selected field */
+  left: 0;
+  width: 100%;
+  box-shadow: 0 12px 28px rgba(0,0,0,.12); /* optional polish */
+}
+
+.dropdown-options div {
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.dropdown-options div:hover {
+  background: #eee;
+}
+
+/* When dropdown is active */
+.custom-dropdown.active .dropdown-options {
+  display: flex;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+
+/*VIEWER PAGE, About condition and dif diagnosis*/
+/* Tabs Section */
+.tab-section {
+  width: 90%;
+  max-width: 600px;
+  margin: 2rem auto;
+}
+
+.tab-buttons {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 1rem;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 0.7rem 1rem;
+  border: 2px solid #ccc;
+  background: #f9f9f9;
+  color: #614ede;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+
+.tab-btn.active {
+  background: #614ede;
+  color: white;
+  border-color: #614ede;
+}
+
+.tab-content {
+  background: #f9f9f9;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+.tab-panel ul {
+  font-size: 0.95rem;
+  margin-top: 0.25rem;
+}
+
+.tab-panel strong {
+  font-size: 1.1rem;
+}
+
+/*Container*/
+/*Button for comparison tool
+.compare-access-btn {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  z-index: 10;
+}
+
+.compare-access-btn:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.compare-access-btn img {
+  width: 24px;
+  height: 24px;
+}*/
+.image-area {
+  position: relative;
+}
+/* Final style for the overlaid compare button */
+.tono-btn {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: #1f2473;
+  color: #fff;
+  font-weight: 700;
+  border: 2px solid #fff;
+  box-shadow: 0 8px 24px rgba(31,36,115,.18);
+  cursor: pointer;
+}
+.tono-btn:focus { outline: 3px solid #7a86ff; outline-offset: 2px; }
+
+/*COMPPARISON FEATURE TRYYYYYINGGGGG
+.comparison-container {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 2rem auto;
+  overflow: hidden;
+}
+
+/*.comparison-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+.comparison-image-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3; /* This gives it a fixed height 
+  overflow: hidden;
+  background: #eee; optional fallback 
+}
+
+/*.comparison-image-wrapper .image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+.comparison-image-wrapper .image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; /* this is the key fix 
+  object-fit: cover;
+}
+
+.image-b {
+  clip-path: inset(0 50% 0 0);
+  transition: clip-path 0.2s ease;
+  z-index: 2;
+}*/
+
+.slider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  background-color: #333;
+  cursor: ew-resize;
+  z-index: 3;
+}
+
+.exit-comparison {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.compare-toggle-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  padding: 6px 12px;
+  background: white;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  z-index: 2;
+}
+.imageB-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+  font-size: 0.95rem;
+  align-items: center;
+}
+
+.imageB-controls label {
+  font-weight: 500;
+  margin-right: 0.25rem;
+}
+
+.imageB-controls select {
+  padding: 0.3rem 0.6rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+}
+/*.comparison-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.comparison-column {
+  flex: 1 1 400px;
+  max-width: 500px;
+}
+
+.image-wrapper {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: #eee;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.image {
+  position: absolute;
+  top: 0; 
+  left: 0;
+  width: 100%; 
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-b {
+  clip-path: inset(0 50% 0 0);
+  z-index: 2;
+}*/
+
+.slider {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50%;
+  width: 4px;
+  background-color: #333;
+  z-index: 3;
+  cursor: ew-resize;
+}
+
+.image-label {
+  text-align: center;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.imageB-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding-left: 0.5rem;
+}
+
+/*Css tweaks*/
+.comparison-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.comparison-column {
+  flex: 1 1 400px;
+  max-width: 500px;
+}
+
+.image-wrapper {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: #eee;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.image {
+  position: absolute;
+  top: 0; 
+  left: 0;
+  width: 100%; 
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-b {
+  clip-path: inset(0 50% 0 0);
+  z-index: 2;
+}
+
+
+

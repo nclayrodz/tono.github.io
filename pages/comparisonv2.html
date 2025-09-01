@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Compare Visuals</title>
+  <link rel="stylesheet" href="../styles.css/main.css" />
+  <link rel="stylesheet" href="../styles.css/viewer.css" />
+  <style>
+    body {
+      background-color: #f9f9f9;
+      font-family: 'Inter', sans-serif;
+      color: #222;
+    }
+
+    .comparison-section {
+      max-width: 900px;
+      margin: 3rem auto;
+      padding: 1rem;
+    }
+
+    .comparison-heading {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    .comparison-container {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      border-radius: 16px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .comparison-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .comparison-container img#imageA {
+      z-index: 1;
+    }
+
+    .comparison-container img#imageB {
+      z-index: 2;
+      clip-path: inset(0 50% 0 0);
+      transition: clip-path 0.2s ease;
+    }
+
+    .slider-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .slider-wrapper input[type=range] {
+      width: 60%;
+    }
+
+    .compare-controls {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .compare-controls select {
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      border: 2px solid #b288f8;
+      font-weight: bold;
+      background-color: white;
+      color: #5b2ebe;
+    }
+
+    .compare-controls label {
+      font-weight: bold;
+      margin-right: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="white-header">
+    <div class="logo">
+      <a href="../index.html">
+        <img src="../images/logo.png" alt="Tono Logo">
+      </a>
+    </div>
+  </header>
+
+  <section class="comparison-section">
+    <div class="comparison-heading">Compare Visuals</div>
+
+    <div class="comparison-container">
+      <img id="imageA" src="" alt="Original Image" />
+      <img id="imageB" src="" alt="Comparison Image" />
+    </div>
+
+    <div class="slider-wrapper">
+      <input type="range" min="0" max="100" value="50" class="slider" id="compareSlider" />
+    </div>
+
+    <div class="compare-controls">
+      <label for="toneSelector">Skin Tone:</label>
+      <select id="toneSelector">
+        <option value="light">Light</option>
+        <option value="medium-light">Medium-Light</option>
+        <option value="medium-dark">Medium-Dark</option>
+        <option value="dark">Dark</option>
+      </select>
+
+      <label for="severitySelector">Severity:</label>
+      <select id="severitySelector">
+        <option value="normal">Normal</option>
+        <option value="mild">Mild</option>
+        <option value="moderate">Moderate</option>
+        <option value="severe">Severe</option>
+      </select>
+    </div>
+  </section>
+
+  <script src="../script.js/data.js"></script>
+  <script src="../script.js/comparison.js"></script>
+
+</body>
+</html>

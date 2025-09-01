@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learn About Eczema</title>
+  <link rel="stylesheet" href="../styles.css/learn3.css">
+  <link rel="stylesheet" href="../styles.css/main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="white-header">
+    <div class="logo">
+        <a href="../index.html">
+        <img src="../images/logo.png" alt= "Tono Logo">
+    </a>
+    </div>
+  <div class="menu-icon" id="menuIcon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</header>
+
+<div id="fullScreenMenu" class="full-screen-menu">
+  <nav>
+    <a href="../index.html">Home</a>
+    <a href="../pages/viewer.html">Eczema Visualizer</a>
+    <a href="../pages/learn.html">Learn About Eczema</a>
+    <a href="../pages/resources.html">Resources</a>
+    <a href="../pages/about.html">About Us</a>
+    <a href="../pages/gallery.html">Image Gallery</a>
+  </nav>
+</div>
+
+<section class="breadcrumb">
+  <p><a href="../index.html">
+    <img src="../images/home-icon.png" alt="Home Icon" class="home-icon"></a> > Learn About Eczema
+  </p>
+</section>
+
+<section class="learn-about-eczema">
+    <div class="container">
+      <!-- Hero Image -->
+      <div class="hero-image placeholder-image">
+        <span>Hero Image: Eczema across skin tones (mild/moderate/severe)</span>
+      </div>
+  
+      <h2>Learn About Eczema</h2>
+  
+      <p>
+        Eczema (atopic dermatitis) is a common, chronic skin condition that causes inflammation, itchiness, and irritation. It affects people of all ages and skin tones—but it doesn’t look the same on everyone.
+      </p>
+  
+      <p>
+        TONO was created to help make eczema easier to recognize—especially in skin of color. That starts with understanding what to look for, how it may appear differently across tones, and why clinical representation matters.
+      </p>
+  
+      <!-- Why Representation Matters -->
+      <h3>Why Representation Matters</h3>
+      <p>
+        Most dermatology references show eczema on light skin. In reality, signs of inflammation—like redness—may appear <strong>violet</strong>, <strong>gray</strong>, <strong>dark brown</strong>, or not visible at all in darker tones.
+      </p>
+  
+      <ul>
+        <li>See how eczema presents in a range of people</li>
+        <li>Compare features across tones</li>
+        <li>Avoid underdiagnosis or misdiagnosis in patients with darker skin</li>
+      </ul>
+  
+      <!-- Image Comparison -->
+      <div class="placeholder-image">
+        <span>Image: Same eczema condition across light, medium, and deep skin tones</span>
+      </div>
+  
+      <!-- Clinical Features Glossary -->
+      <h3>Clinical Features to Look For</h3>
+      <p>
+        Eczema has a wide range of appearances depending on age, severity, chronicity, and skin tone. Here are some features you may encounter:
+      </p>
+  
+      <!-- Accordion Glossary -->
+      <div class="glossary-accordion">
+        <div class="accordion-item">
+          <button class="accordion-toggle">Erythema</button>
+          <div class="accordion-content">
+            <p>Redness from inflammation. In darker skin, it may appear purple, gray, or hard to detect.</p>
+          </div>
+        </div>
+  
+        <div class="accordion-item">
+          <button class="accordion-toggle">Lichenification</button>
+          <div class="accordion-content">
+            <p>Thickened, leathery skin from chronic scratching. Often hyperpigmented in dark skin.</p>
+          </div>
+        </div>
+  
+        <div class="accordion-item">
+          <button class="accordion-toggle">Excoriation</button>
+          <div class="accordion-content">
+            <p>Surface-level scratches or wounds from intense itching.</p>
+          </div>
+        </div>
+  
+        <div class="accordion-item">
+          <button class="accordion-toggle">Xerosis</button>
+          <div class="accordion-content">
+            <p>Dry, flaky skin—may appear ashy in richly pigmented skin.</p>
+          </div>
+        </div>
+  
+        <div class="accordion-item">
+          <button class="accordion-toggle">Hyperpigmentation</button>
+          <div class="accordion-content">
+            <p>Darker patches left after inflammation heals.</p>
+          </div>
+        </div>
+  
+        <div class="accordion-item">
+          <button class="accordion-toggle">Hypopigmentation</button>
+          <div class="accordion-content">
+            <p>Lighter areas of skin caused by disrupted melanin production after inflammation.</p>
+          </div>
+        </div>
+      </div>
+        
+      <!-- Feature Thumbnails -->
+      <!-- Feature Thumbnails with Click-to-Enlarge Modals -->
+        <div class="thumbnail-row">
+
+            <!-- Lichenification -->
+            <div class="clickable-image">
+            <img src="images/placeholder-lichenification.jpg" alt="Lichenification example" onclick="openModal('lichenification')" />
+            <p class="caption">Click to enlarge</p>
+            </div>
+        
+            <div id="lichenification-modal" class="image-modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('lichenification')">&times;</span>
+                <div class="modal-img">
+                <img src="../images/eczema/atopic/atopic-face-neck-light-moderate.png" alt="Lichenification on dark skin" />
+                <p class="modal-description">
+                    <strong>Lichenification:</strong> Thickened, leathery skin caused by repeated scratching. Often appears hyperpigmented in richly pigmented skin.
+                </p>
+                </div>
+            </div>
+            </div>
+        
+            <!-- Xerosis -->
+            <div class="clickable-image">
+            <img src="images/placeholder-xerosis.jpg" alt="Xerosis example" onclick="openModal('xerosis')" />
+            <p class="caption">Click to enlarge</p>
+            </div>
+        
+            <div id="xerosis-modal" class="image-modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('xerosis')">&times;</span>
+                <div class="modal-img">
+                <img src="images/placeholder-xerosis.jpg" alt="Xerosis example close-up" />
+                <p class="modal-description">
+                    <strong>Xerosis:</strong> Extremely dry, flaky skin that can appear ashy or white in darker tones.
+                </p>
+                </div>
+            </div>
+            </div>
+        
+            <!-- Hyperpigmentation -->
+            <div class="clickable-image">
+            <img src="images/placeholder-hyperpigmentation.jpg" alt="Hyperpigmentation example" onclick="openModal('hyperpigmentation')" />
+            <p class="caption">Click to enlarge</p>
+            </div>
+        
+            <div id="hyperpigmentation-modal" class="image-modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('hyperpigmentation')">&times;</span>
+                <div class="modal-img">
+                <img src="images/placeholder-hyperpigmentation.jpg" alt="Hyperpigmentation on dark skin" />
+                <p class="modal-description">
+                    <strong>Hyperpigmentation:</strong> Darkened patches left behind after inflammation heals. Common in medium and deep skin tones.
+                </p>
+                </div>
+            </div>
+            </div>
+        
+        </div> <!-- /thumbnail-row -->
+        
+  
+      <!-- Skin Tone Examples -->
+      <h3>Eczema in Different Skin Tones</h3>
+      <ul>
+        <li><strong>Light skin:</strong> Red, scaly patches are usually easy to spot.</li>
+        <li><strong>Medium skin:</strong> May appear reddish-brown or dusky with pigment changes.</li>
+        <li><strong>Deep skin:</strong> Inflammation may look purple, gray, or may not show at all.</li>
+      </ul>
+  
+      <div class="skin-tone-examples">
+        <div class="placeholder-image"><span>Light Skin Example</span></div>
+        <div class="placeholder-image"><span>Medium Skin Example</span></div>
+        <div class="placeholder-image"><span>Deep Skin Example</span></div>
+      </div>
+  
+      <!-- TONO Tool -->
+      <h3>What TONO Offers</h3>
+      <ul>
+        <li>Visual atlas of eczema on diverse skin</li>
+        <li>Severity comparisons from mild to severe</li>
+        <li>Clear, consistent views by body region</li>
+        <li>Side-by-side comparison tool</li>
+      </ul>
+  
+      <div class="placeholder-image">
+        <span>Screenshot: TONO tool in use</span>
+      </div>
+    </div>
+  </section>
+  <div class="disclaimer">
+    <p>
+      <strong>Disclaimer:</strong> This tool is intended for educational purposes only. It is designed to support healthcare professionals in recognizing eczema across a range of skin tones and severities. It is not intended to replace clinical judgment, provide medical advice, or be used for self-diagnosis. For concerns about your skin or health, please consult a qualified healthcare provider.
+    </p>
+  </div>
+
+  <!-- References -->
+<section class="references">
+    <h3>References</h3>
+    <ol>
+      <li>
+        Alexis A, Sergay AB, Taylor SC. Common dermatologic disorders in skin of color: a comparative practice guide. <em>Cutis</em>. 2020;105(4):188–192.
+      </li>
+      <li>
+        Kaufman BP, Guttman-Yassky E, Alexis AF. Atopic dermatitis in diverse racial and ethnic groups—variations in epidemiology, genetics, clinical presentation and treatment. <em>Exp Dermatol</em>. 2018;27(4):340–357.
+      </li>
+      <li>
+        Nijhawan RI, Alexis AF. Perceptions of dermatologic images in skin of color: a cross-sectional survey of dermatology residents. <em>J Am Acad Dermatol</em>. 2020;83(3):955–957.
+      </li>
+      <li>
+        Kundu RV, Patterson S. Dermatologic conditions in skin of color: part I. Special considerations for common skin disorders. <em>Am Fam Physician</em>. 2013;87(12):850–856.
+      </li>
+      <li>
+        National Eczema Association. <a href="https://nationaleczema.org/" target="_blank">https://nationaleczema.org/</a>
+      </li>
+    </ol>
+  </section>
+  
+  <p class="reference-note">
+    These references were used to inform the medical content on this page and reflect current literature on eczema diagnosis, presentation, and care across skin tones.
+  </p>
+  
+  
+  
+
+    <div class="back-to-top">
+        <a href="#">Back to top &#x25B2;</a>
+    </div>
+
+    <footer class="tono-footer">
+        <div class="footer-main">
+          <!-- Left block: Logo + Description -->
+          <div class="footer-brand">
+            <img src="../images/logo.png" alt="TONO Logo" class="footer-logo" />
+            <p class="footer-description">
+              TONO is a mobile-accessible visual reference for eczema in every skin tone, helping healthcare providers make more inclusive, accurate assessments.
+            </p>
+          </div>
+      
+          <!-- Divider -->
+          <div class="footer-divider"></div>
+      
+          <!-- Right block: Link lists -->
+          <div class="footer-links">
+            <ul>
+              <li><a href="about.html">About</a></li>
+              <li><a href="contact.html">Contact</a></li>
+              <li><a href="#">For instructors</a></li>
+              <li><a href="#">For students</a></li>
+            </ul>
+            <ul>
+              <li><a href="#">FAQs</a></li>
+              <li><a href="#">Terms & Conditions</a></li>
+              <li><a href="#">Accessibility</a></li>
+              <li><a href="#">Disclaimer</a></li>
+            </ul>
+          </div>
+        </div>
+      
+        <!-- Support Logos Centered -->
+        <div class="footer-support">
+          <p>TONO is supported by</p>
+          <div class="support-logos">
+            <img src="images/logo-bmc.png" alt="BMC Logo" />
+            <img src="images/logo-vesalius.png" alt="Vesalius Trust Logo" />
+            <img src="images/logo-uoft.png" alt="University of Toronto Logo" />
+          </div>
+        </div>
+      
+        <!-- Bottom -->
+        <div class="footer-bottom">
+          <p>&copy; 2025 TONO Project. All Rights Reserved.</p>
+        </div>
+      </footer>
+      
+      
+      
+  
+  <!--footer>
+    <footer class="site-footer">
+        <div class="footer-content">
+          <div class="footer-section about">
+            <h4>About TONO</h4>
+            <p>TONO is a visual reference tool designed to support healthcare providers in identifying eczema across all skin tones and severities.</p>
+          </div>
+      
+          <div class="footer-section quick-links">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="viewer.html">Eczema Visualizer</a></li>
+              <li><a href="learn.html">Learn</a></li>
+              <li><a href="resources.html">Resources</a></li>
+              <li><a href="about.html">About</a></li>
+            </ul>
+          </div>
+      
+          <div class="footer-section contact">
+            <h4>Contact</h4>
+            <p>Created by Naomi Clay Rodríguez<br>Master of Biomedical Communications, University of Toronto<br><a href="mailto:naomi.clay@utoronto.ca">naomi.clay@utoronto.ca</a></p>
+          </div>
+        </div>
+      
+        <div class="footer-bottom">
+          <p>&copy; 2025 TONO Project. All rights reserved.</p>
+        </div>
+      </footer>
+      
+  </footer-->
+  
+  <script src="../script.js/main.js"defer></script>
+  <script>
+    document.querySelectorAll('.accordion-toggle').forEach(button => {
+      button.addEventListener('click', () => {
+        const item = button.parentElement;
+        item.classList.toggle('active');
+      });
+    });
+  </script>
+  <script>
+    function openModal(id) {
+      document.getElementById(id + '-modal').style.display = 'block';
+    }
+  
+    function closeModal(id) {
+      document.getElementById(id + '-modal').style.display = 'none';
+    }
+  
+    // Optional: Close modal on outside click
+    window.addEventListener('click', function(event) {
+      document.querySelectorAll('.image-modal').forEach(modal => {
+        if (event.target === modal) {
+          modal.style.display = 'none';
+        }
+      });
+    });
+  
+    // Optional: Escape key closes modal
+    window.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        document.querySelectorAll('.image-modal').forEach(modal => {
+          modal.style.display = 'none';
+        });
+      }
+    });
+  </script>
+  
+  
+  
+  </body>
+  </html>

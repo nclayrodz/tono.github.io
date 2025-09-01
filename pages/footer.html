@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learn About Eczema</title>
+  <link rel="stylesheet" href="../styles.css/learn3.css">
+  <link rel="stylesheet" href="../styles.css/main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="white-header">
+    <div class="logo">
+        <a href="../index.html">
+        <img src="../images/logo.png" alt= "Tono Logo">
+    </a>
+    </div>
+  <div class="menu-icon" id="menuIcon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</header>
+
+<div id="fullScreenMenu" class="full-screen-menu">
+  <nav>
+    <a href="../index.html">Home</a>
+    <a href="../pages/viewer.html">Eczema Visualizer</a>
+    <a href="../pages/learn.html">Learn About Eczema</a>
+    <a href="../pages/resources.html">Resources</a>
+    <a href="../pages/about.html">About Us</a>
+    <a href="../pages/gallery.html">Image Gallery</a>
+  </nav>
+</div>
+
+<section class="breadcrumb">
+  <p><a href="../index.html">
+    <img src="../images/home-icon.png" alt="Home Icon" class="home-icon"></a> > Learn About Eczema
+  </p>
+</section>
+
+<details class="references" id="references">
+    <summary>
+      References
+      <span class="arrow-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="references-content">
+      <ul>
+        <li>Smith et al. (2020). Eczema in diverse populations. *Dermatology Journal*.</li>
+        <li>Anderson, M. (2019). Atopic dermatitis across skin tones. *Clinical Dermatology Review*.</li>
+        <li>Fitzpatrick, T.B. (1988). The validity of skin type classifications. *Arch Dermatol*.</li>
+      </ul>
+    </div>
+  </details>
+
+  <style>
+.references {
+  margin-top: 2rem;
+  border-top: 1px solid #333;
+  font-size: 0.95rem;
+  color: #181818;
+  padding-top: 1rem;
+}
+
+.references summary {
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+}
+
+.references summary::-webkit-details-marker {
+  display: none;
+}
+
+.arrow-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  transform: rotate(0deg);
+  transition: transform 0.3s ease;
+}
+
+.references[open] .arrow-icon {
+  transform: rotate(180deg);
+}
+
+.references-content {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.5s ease, opacity 0.3s ease;
+  padding-top: 0.5rem;
+}
+
+.references[open] .references-content {
+  max-height: 500px; /* Adjust if needed */
+  opacity: 1;
+}
+
+  </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const details = document.getElementById("references");
+      const content = details.querySelector(".references-content");
+      const summary = details.querySelector("summary");
+  
+      summary.addEventListener("click", (e) => {
+        e.preventDefault();
+  
+        const isOpen = details.hasAttribute("open");
+        if (isOpen) {
+          content.style.maxHeight = "0";
+          content.style.opacity = "0";
+          details.removeAttribute("open");
+        } else {
+          details.setAttribute("open", "true");
+          content.style.maxHeight = content.scrollHeight + "px";
+          content.style.opacity = "1";
+        }
+      });
+    });
+  </script>
+    
+</body>
+</html>

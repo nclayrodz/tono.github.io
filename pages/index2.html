@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eczema Viewer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    
+</head>
+<body>
+    <div class="container">
+        <h1>Eczema Viewer</h1>
+
+        <div class="columns">
+            <!-- Main Options -->
+            <div class="options" id="main-options">
+                <div class="form-group">
+                    <label for="eczema-type">Select Eczema Type:</label>
+                    <select id="eczema-type">
+                        <option value="atopic_dermatitis">Atopic Dermatitis</option>
+                        <option value="seborrheic_dermatitis">Seborrheic Dermatitis</option>
+                        <option value="contact_dermatitis">Contact Dermatitis</option>
+                        <option value="nummular_eczema">Nummular Eczema</option>
+                        <option value="dyshidrotic_eczema">Dyshidrotic Eczema</option>
+                        <option value="neurodermatitis">Neurodermatitis</option>
+                        <option value="stasis_dermatitis">Stasis Dermatitis</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Select Skin Tone:</label>
+                    <div class="circle-group" id="skin-tone-buttons">
+                        <button data-value="FP12" class="circle selected" style="background-color: #f4d8c7;"></button>
+                        <button data-value="FP34" class="circle" style="background-color: #d3a68f;"></button>
+                        <button data-value="FP56" class="circle" style="background-color: #8c6b55;"></button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Select Severity Level:</label>
+                    <div class="button-group" id="severity-buttons">
+                        <button data-value="normal">Normal</button>
+                        <button data-value="mild">Mild</button>
+                        <button data-value="medium" class="selected">Medium</button>
+                        <button data-value="severe">Severe</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Select Body Part:</label>
+                    <div class="button-group" id="body-part-buttons">
+                        <button data-value="flat" class="selected">Flat Part of Body</button>
+                        <button data-value="fold">Fold/Crease</button>
+                    </div>
+                </div>
+
+                <button class="reset-button" id="reset-main">Reset Settings</button>
+            </div>
+
+            <!-- Divider -->
+            <div class="divider hidden" id="divider"></div>
+
+            <!-- Comparison Options -->
+            <div class="comparison-options hidden" id="comparison-options">
+                <div class="form-group">
+                    <label for="comparison-eczema-type">Select Eczema Type:</label>
+                    <select id="comparison-eczema-type">
+                        <option value="atopic_dermatitis">Atopic Dermatitis</option>
+                        <option value="seborrheic_dermatitis">Seborrheic Dermatitis</option>
+                        <option value="contact_dermatitis">Contact Dermatitis</option>
+                        <option value="nummular_eczema">Nummular Eczema</option>
+                        <option value="dyshidrotic_eczema">Dyshidrotic Eczema</option>
+                        <option value="neurodermatitis">Neurodermatitis</option>
+                        <option value="stasis_dermatitis">Stasis Dermatitis</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Select Skin Tone:</label>
+                    <div class="circle-group" id="comparison-skin-tone-buttons">
+                        <button data-value="FP12" class="circle selected" style="background-color: #f4d8c7;"></button>
+                        <button data-value="FP34" class="circle" style="background-color: #d3a68f;"></button>
+                        <button data-value="FP56" class="circle" style="background-color: #8c6b55;"></button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Select Severity Level:</label>
+                    <div class="button-group" id="comparison-severity-buttons">
+                        <button data-value="normal">Normal</button>
+                        <button data-value="mild">Mild</button>
+                        <button data-value="medium" class="selected">Medium</button>
+                        <button data-value="severe">Severe</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Select Body Part:</label>
+                    <div class="button-group" id="comparison-body-part-buttons">
+                        <button data-value="flat" class="selected">Flat Part of Body</button>
+                        <button data-value="fold">Fold/Crease</button>
+                    </div>
+                </div>
+
+                <button class="reset-button" id="reset-comparison">Reset Settings</button>
+            </div>
+        </div>
+ <d>   <p></p>
+        <div class="image-container">
+        
+            <div class="eczema-image" id="eczema-image"></div>
+            <div class="comparison-button" id="comparison-button">
+                <span id="comparison-button-text">Compare</span>
+                <i class="icon">🔍</i>
+            </div>
+            <div class="slider hidden" id="slider">
+                <div class="comparison-overlay" id="comparison-overlay"></div>
+                <div class="slider-dragger" id="slider-dragger"></div>
+              <div class="dynamic-text-right" id="comparison-dynamic-text"></div>
+            </div>
+            <div class="dynamic-text" id="dynamic-text"></div>
+        </div>
+        
+    </div>
+    
+
+    <footer class="footer">
+        <p>© 2024 Eczema Viewer. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

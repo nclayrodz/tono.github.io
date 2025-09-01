@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>TONO • Resources</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#1f2473;         /* deep indigo from compare */
+      --ink-2:#353bb3;
+      --bg:#f2f4fb;          /* light bg */
+      --card:#ffffff;        /* white cards */
+      --muted:#6b7280;       /* subdued text */
+      --ring:#7a86ff;        /* focus ring */
+      --shadow:0 8px 24px rgba(31,36,115,.12);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; background:var(--bg); color:#0f172a}
+
+    /* Header matches compare.html */
+    header.white-header{position:sticky; top:0; z-index:50; background:#fff; border-bottom:1px solid #e5e7eb}
+    header.white-header .logo{display:flex; align-items:center; gap:10px; padding:10px 16px}
+    header.white-header img{height:34px}
+    .menu-icon{margin-left:auto; margin-right:12px; width:28px; height:20px; display:grid; align-content:space-between; cursor:pointer}
+    .menu-icon span{display:block; height:2px; background:#111827; border-radius:2px}
+    .full-screen-menu{position:fixed; inset:0; background:rgba(255,255,255,.98); display:none; align-items:center; justify-content:center}
+    .full-screen-menu nav{display:grid; gap:18px; text-align:center}
+    .full-screen-menu a{color:#111827; font-weight:800; text-decoration:none}
+
+    .wrap{max-width:1100px; margin:28px auto 40px; padding:0 16px}
+    h1{font-size:26px; color:var(--ink); margin:8px 0 8px}
+    .lede{max-width:760px; line-height:1.65; color:#334155; margin:0 0 16px}
+
+    .panel{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:16px; border:1px solid #e5e7eb}
+    .muted{color:var(--muted)}
+
+    .grid{display:grid; gap:18px}
+    .grid.cols-2{grid-template-columns:1.05fr .95fr}
+    .grid.cols-3{grid-template-columns:repeat(3,1fr)}
+    @media (max-width: 980px){ .grid.cols-2,.grid.cols-3{grid-template-columns:1fr} }
+
+    .card{background:var(--card); border:1px solid #e5e7eb; border-radius:var(--radius); padding:14px}
+    .card h3{margin:0 0 6px; color:var(--ink)}
+    .badge{display:inline-block; padding:.25rem .5rem; border-radius:999px; background:#eef2ff; color:#1f2473; font-weight:700}
+
+    .pill{border:1px solid #c7cbe1; padding:8px 12px; border-radius:999px; cursor:pointer; font-weight:600; background:#f8f9ff}
+    .pill[aria-pressed="true"]{background:var(--ink); color:#fff; border-color:var(--ink); box-shadow:0 0 0 3px rgba(122,134,255,.25)}
+
+    /* Search + tag filter */
+    .toolbar{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    .search{flex:1 1 320px; display:flex; align-items:center; gap:8px; background:#fff; border:1px solid #e5e7eb; border-radius:999px; padding:8px 12px}
+    .search input{border:0; outline:none; flex:1; font:inherit}
+
+    .tags{display:flex; gap:8px; flex-wrap:wrap}
+    .tag{border:1px solid #d1d5db; background:#f8fafc; color:#1f2937; padding:6px 10px; border-radius:999px; cursor:pointer; font-weight:600}
+    .tag[aria-pressed="true"]{background:var(--ink); color:#fff; border-color:var(--ink); box-shadow:0 0 0 3px rgba(122,134,255,.25)}
+
+    /* Resource list */
+    .list{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+    @media (max-width: 900px){ .list{grid-template-columns:1fr} }
+    .item{display:grid; gap:6px; background:#fff; border:1px solid #e5e7eb; border-radius:16px; padding:12px}
+    .item .meta{font-size:12px; color:#6b7280}
+    .item a{color:#1f2473; font-weight:700; text-decoration:none}
+    .item a:hover{ text-decoration:underline }
+  </style>
+</head>
+<body>
+  <div class="reading-progress" id="readingProgress" style="position:fixed; inset:0 0 auto 0; height:4px; background:linear-gradient(90deg,var(--ink),#b3b8ff); transform-origin:0 50%; transform:scaleX(0); z-index:60"></div>
+
+  <!-- Header (borrowed from compare.html) -->
+  <header class="white-header">
+    <div class="logo">
+      <a href="../index.html"><img src="../images/logo.png" alt="Tono Logo"></a>
+      <div class="menu-icon" id="menuIcon" aria-label="Open menu" role="button" tabindex="0">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </header>
+  <div id="fullScreenMenu" class="full-screen-menu" aria-hidden="true">
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../pages/viewer.html">Eczema Visualizer</a>
+      <a href="../learn.html">Learn About Eczema</a>
+      <a href="../pages/resources.html">Resources</a>
+      <a href="../pages/about.html">About Us</a>
+      <a href="../pages/gallery.html">Image Gallery</a>
+    </nav>
+  </div>
+
+  <!-- Breadcrumb -->
+  <section class="breadcrumb" style="padding:10px 16px">
+    <p style="margin:0; color:#475569">
+      <a href="../index.html" style="color:#1f2473; font-weight:700; text-decoration:none">Home</a>
+      <span style="opacity:.45"> › </span>
+      <span>Resources</span>
+    </p>
+  </section>
+
+  <div class="wrap">
+    <h1>Resources</h1>
+    <p class="lede">Curated organizations, guidelines, and videos to deepen understanding of eczema across skin tones and severities. Everything below is external and opens in a new tab.</p>
+
+    <!-- Toolbar: search + quick tags -->
+    <div class="panel">
+      <div class="toolbar">
+        <div class="search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input id="searchInput" type="search" placeholder="Search resources (e.g., 'guideline', 'skin of color', 'videos')"/>
+        </div>
+        <div class="tags" role="group" aria-label="Quick filters">
+          <button class="tag" data-tag="orgs" aria-pressed="false">Organizations</button>
+          <button class="tag" data-tag="guidelines" aria-pressed="false">Guidelines</button>
+          <button class="tag" data-tag="patient" aria-pressed="false">Patient Education</button>
+          <button class="tag" data-tag="videos" aria-pressed="false">Videos</button>
+          <button class="tag" data-tag="skin-of-color" aria-pressed="false">Skin of Color</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lists -->
+    <section class="panel">
+      <h2 style="margin:0 0 8px; color:var(--ink)">Featured</h2>
+      <div class="list" id="featured"></div>
+    </section>
+
+    <section class="panel">
+      <h2 style="margin:0 0 8px; color:var(--ink)">All Resources</h2>
+      <div class="list" id="all"></div>
+    </section>
+  </div>
+
+  <script>
+    // Reading progress
+    const prog = document.getElementById('readingProgress');
+    document.addEventListener('scroll',()=>{
+      const h=document.documentElement; const scrolled=(h.scrollTop)/(h.scrollHeight-h.clientHeight);
+      prog.style.transform=`scaleX(${Math.min(1,scrolled)})`;
+    },{passive:true});
+
+    // Simple menu toggle
+    const menu = document.getElementById('fullScreenMenu');
+    const icon = document.getElementById('menuIcon');
+    function toggleMenu(){ const on = menu.style.display !== 'flex'; menu.style.display = on ? 'flex' : 'none'; menu.setAttribute('aria-hidden', String(!on)); }
+    icon?.addEventListener('click', toggleMenu);
+    icon?.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); toggleMenu(); }});
+
+    // === Resource data ===
+    // Each item: {title, href, source, tags:[...], blurb}
+    const RES = [
+      { title:'American Academy of Dermatology — Atopic Dermatitis (Patient Overview)', href:'https://www.aad.org/public/diseases/eczema/types/atopic-dermatitis', source:'AAD', tags:['orgs','patient'], blurb:'Clear overview of atopic dermatitis from the AAD public pages.' },
+      { title:'AAD Clinical Guidelines — Atopic Dermatitis (Series Updates)', href:'https://www.aad.org/member/clinical-quality/guidelines/atopic-dermatitis', source:'AAD', tags:['guidelines','orgs'], blurb:'Guideline updates for clinicians on diagnosis and management.' },
+      { title:'National Eczema Association — Resource Hub for HCPs', href:'https://nationaleczema.org/hcp-resource-hub/', source:'NEA', tags:['orgs','patient'], blurb:'Tools for clinics, patient handouts, and research updates.' },
+      { title:'National Eczema Association — Main Site', href:'https://nationaleczema.org/', source:'NEA', tags:['orgs','patient'], blurb:'Education, community support, research, and treatment information.' },
+      { title:'DermNet — Atopic Dermatitis (Clinician Reference)', href:'https://dermnetnz.org/topics/atopic-dermatitis', source:'DermNet', tags:['patient','orgs'], blurb:'Concise, image‑rich reference for clinical features across stages.' },
+      { title:'NICE Guideline — Atopic eczema in under 12s', href:'https://www.nice.org.uk/guidance/cg57', source:'NICE', tags:['guidelines','orgs'], blurb:'Diagnosis and management guidance (children <12); regularly reviewed.' },
+      { title:'MedlinePlus — Eczema/Dermatitis (NIH/NLM)', href:'https://medlineplus.gov/eczema.html', source:'NIH/NLM', tags:['patient','orgs'], blurb:'NIH/NLM consumer‑friendly hub with trusted links and summaries.' },
+      { title:'NHS — Atopic eczema', href:'https://www.nhs.uk/conditions/atopic-eczema/', source:'NHS', tags:['patient','orgs'], blurb:'Treatment options, when to see a GP, and self‑care guidance.' },
+      { title:'NEA YouTube — Webinar Wednesdays Playlist', href:'https://www.youtube.com/playlist?list=PLBM0qMPbkPa3TTAheNTQqVHliEgJ6ARs3', source:'NEA/YouTube', tags:['videos'], blurb:'Expert webinars covering treatments, research, and daily management.' },
+      { title:'AAD YouTube — Eczema Skin Care Tips', href:'https://www.youtube.com/watch?v=T_HbQo5oWak', source:'AAD/YouTube', tags:['videos','patient'], blurb:'Short dermatologist‑led tips to reduce flares and itch.' },
+      { title:'National Eczema Society (UK) — HCP Info & Booklets', href:'https://eczema.org/information-and-advice/information-for-healthcare-professionals/', source:'NES (UK)', tags:['orgs','patient'], blurb:'Evidence‑based patient information; regularly clinician‑reviewed.' },
+      { title:'Exploring Eczema webinar — Systemic Therapies (example)', href:'https://www.youtube.com/watch?v=tY1Xd5EgELE', source:'National Eczema Society/YouTube', tags:['videos'], blurb:'Deep‑dive webinar on advanced therapy options.' }
+    ];
+
+    // Featured picks (first six by default)
+    const featuredIds = [0,2,4,5,7,8];
+
+    const featured = document.getElementById('featured');
+    const all = document.getElementById('all');
+
+    function cardHTML(r){
+      return `<div class="item" data-tags="${r.tags.join(' ')}" data-title="${r.title.toLowerCase()}">
+        <a href="${r.href}" target="_blank" rel="noopener">${r.title}</a>
+        <div class="meta">${r.source} • <span class="badge">${r.tags[0]}</span></div>
+        <p class="muted" style="margin:4px 0 0">${r.blurb}</p>
+      </div>`;
+    }
+
+    function render(){
+      featured.innerHTML = featuredIds.map(i => cardHTML(RES[i])).join('');
+      all.innerHTML = RES.map(r => cardHTML(r)).join('');
+    }
+    render();
+
+    // Search + tag filter
+    const searchInput = document.getElementById('searchInput');
+    const tagBtns = [...document.querySelectorAll('.tag')];
+
+    function applyFilters(){
+      const q = (searchInput.value||'').trim().toLowerCase();
+      const active = new Set(tagBtns.filter(b=>b.getAttribute('aria-pressed')==='true').map(b=>b.dataset.tag));
+      document.querySelectorAll('.item').forEach(it=>{
+        const tags = it.dataset.tags.split(' ');
+        const title = it.dataset.title;
+        const matchesTag = active.size===0 || tags.some(t=>active.has(t));
+        const matchesText = q==='' || title.includes(q);
+        it.style.display = matchesTag && matchesText ? '' : 'none';
+      });
+    }
+
+    searchInput.addEventListener('input', applyFilters);
+    tagBtns.forEach(b=> b.addEventListener('click', ()=>{ const on=b.getAttribute('aria-pressed')==='true'; b.setAttribute('aria-pressed', String(!on)); applyFilters(); }));
+
+  </script>
+</body>
+</html>

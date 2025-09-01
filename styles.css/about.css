@@ -1,0 +1,90 @@
+
+ /* About Us Page */
+
+ .about-section {
+    width: 90%;
+    max-width: 1200px;
+    margin: 2rem auto;
+    text-align: center;
+  }
+  
+  .about-section h2 {
+    margin-bottom: 1rem;
+    color: #2E2E8B;
+  }
+  
+  .about-section p {
+    margin-bottom: 2rem;
+    color: #2E2E8B;
+    line-height: 1.6;
+  }
+  
+  .about-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+  
+  .main-btn {
+    padding: 0.8rem 1.5rem;
+    background-color: #4656e0;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.3s;
+  }
+  
+  .main-btn:hover {
+    background-color: #323da0;
+  }
+  
+  .team-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+  }
+  
+  .team-card {
+    background: #f9f9f9;
+    border-radius: 12px;
+    padding: 1.5rem;
+    width: 280px;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .team-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .team-card img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+  }
+  
+  .team-card h3 {
+    margin: 0.5rem 0;
+    color: #6B4EFF;
+  }
+  
+  .team-title {
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 0.5rem;
+  }
+  
+  .team-link {
+    margin-top: 1rem;
+    display: inline-block;
+    color: #6B4EFF;
+    text-decoration: underline;
+    font-weight: 600;
+  }

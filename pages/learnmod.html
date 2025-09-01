@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>TONO • Learn About Eczema</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../styles.css/main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{ --ink:#1f2473; --bg:#f2f4fb; --card:#ffffff; --muted:#6b7280; --radius:18px; --shadow:0 8px 24px rgba(31,36,115,.12); }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:Inter,system-ui; background:var(--bg); color:#0f172a}
+
+    /* Header matches compare */
+    header.white-header{position:sticky; top:0; z-index:50; background:#fff; border-bottom:1px solid #e5e7eb}
+    header.white-header .logo{display:flex; align-items:center; gap:10px; padding:10px 16px}
+    header.white-header img{height:34px}
+    .menu-icon{margin-left:auto; margin-right:12px; width:28px; height:20px; display:grid; align-content:space-between; cursor:pointer}
+    .menu-icon span{display:block; height:2px; background:#111827; border-radius:2px}
+    .full-screen-menu{position:fixed; inset:0; background:rgba(255,255,255,.98); display:none; align-items:center; justify-content:center}
+    .full-screen-menu nav{display:grid; gap:18px; text-align:center}
+    .full-screen-menu a{color:#111827; font-weight:800; text-decoration:none}
+
+    .wrap{max-width:1100px; margin:24px auto 40px; padding:0 16px}
+    h1{font-size:28px; color:var(--ink); margin:8px 0 10px}
+    .lede{max-width:800px; line-height:1.65; color:#334155; margin:0 0 16px}
+
+    .panel{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:18px; border:1px solid #e5e7eb; margin-bottom:18px}
+    .muted{color:var(--muted)}
+
+    .grid{display:grid; gap:18px}
+    .grid.cols-2{grid-template-columns:1.1fr .9fr}
+    .grid.cols-3{grid-template-columns:repeat(3,1fr)}
+    @media (max-width: 980px){ .grid.cols-2,.grid.cols-3{grid-template-columns:1fr} }
+
+    /* Hero media placeholder */
+    .hero-image{height:240px; border:1px dashed #cbd5e1; border-radius:16px; background:linear-gradient(180deg,#eef2ff,#f8fafc); display:grid; place-items:center; color:#475569}
+
+    /* Icon list pills */
+    .icon-list{display:grid; grid-template-columns:repeat(2,1fr); gap:12px}
+    @media (max-width:700px){ .icon-list{grid-template-columns:1fr} }
+    .icon-item{display:flex; gap:10px; align-items:flex-start; background:#fff; border:1px solid #e5e7eb; border-radius:12px; padding:12px}
+    .icon{width:36px; height:36px; border-radius:10px; display:grid; place-items:center; background:#eef2ff; border:1px solid #c7d2fe; flex:0 0 36px}
+
+    /* Accordion (glossary) */
+    .accordion{border:1px solid #e5e7eb; border-radius:14px; overflow:hidden}
+    .acc-item + .acc-item{border-top:1px solid #e5e7eb}
+    .acc-trigger{width:100%; text-align:left; background:#f8fafc; color:#111827; padding:14px 16px; border:0; cursor:pointer; font-weight:800; display:flex; align-items:center; justify-content:space-between}
+    .acc-trigger svg{opacity:.75}
+    .acc-content{max-height:0; overflow:hidden; transition:max-height .3s ease}
+    .acc-item.open .acc-content{max-height:500px}
+    .acc-body{padding:12px 16px}
+
+    /* Thumbnails + modal */
+    .thumbnail-row{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
+    @media (max-width:900px){ .thumbnail-row{grid-template-columns:1fr 1fr} }
+    @media (max-width:600px){ .thumbnail-row{grid-template-columns:1fr} }
+    .clickable-image{background:#fff; border:1px solid #e5e7eb; border-radius:12px; padding:10px; text-align:center}
+    .clickable-image img{width:100%; border-radius:10px; border:1px solid #e5e7eb}
+    .caption{font-size:12px; color:#6b7280; margin:6px 0 0}
+
+    .image-modal{display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:70; padding:20px}
+    .modal-content{max-width:900px; margin:auto; background:#fff; border-radius:14px; overflow:hidden; box-shadow:0 18px 40px rgba(0,0,0,.2)}
+    .modal-head{display:flex; justify-content:space-between; align-items:center; padding:10px 14px; border-bottom:1px solid #e5e7eb}
+    .close{cursor:pointer; font-size:22px; line-height:1}
+    .modal-img{padding:10px}
+    .modal-img img{width:100%; border-radius:10px; border:1px solid #e5e7eb}
+
+    /* Link cards to other tools */
+    .links-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; margin-top:8px}
+    .link-card{display:block; text-decoration:none; background:#fff; border:1px solid #e5e7eb; border-radius:14px; padding:20px; box-shadow:0 6px 16px rgba(31,36,115,.1); transition:transform .2s ease}
+    .link-card:hover{transform:translateY(-4px)}
+    .link-card h3{margin:0 0 8px; color:var(--ink)}
+    .link-card p{margin:0; font-size:14px; color:#475569}
+
+    /* Back to top */
+    .back-to-top{position:fixed; right:16px; bottom:16px;}
+    .back-to-top a{display:inline-block; background:#fff; border:1px solid #cbd5e1; border-radius:999px; padding:8px 12px; text-decoration:none; color:#1f2473; box-shadow:0 6px 16px rgba(31,36,115,.12)}
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="white-header">
+    <div class="logo">
+      <a href="../index.html"><img src="../images/logo.png" alt="Tono Logo"></a>
+      <div class="menu-icon" id="menuIcon" aria-label="Open menu" role="button" tabindex="0">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </header>
+  <div id="fullScreenMenu" class="full-screen-menu" aria-hidden="true">
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../pages/viewer.html">Eczema Visualizer</a>
+      <a href="../learn.html">Learn About Eczema</a>
+      <a href="../pages/resources.html">Resources</a>
+      <a href="../pages/about.html">About Us</a>
+      <a href="../pages/gallery.html">Image Gallery</a>
+    </nav>
+  </div>
+
+  <!-- Breadcrumb -->
+  <section class="breadcrumb" style="padding:10px 16px">
+    <p style="margin:0; color:#475569">
+      <a href="../index.html" style="color:#1f2473; font-weight:700; text-decoration:none">Home</a>
+      <span style="opacity:.45"> › </span>
+      <span>Learn About Eczema</span>
+    </p>
+  </section>
+
+  <div class="wrap">
+    <!-- Hero / Intro -->
+    <section class="panel">
+      <div class="grid cols-2" style="align-items:center">
+        <div>
+          <h1>Learn About Eczema</h1>
+          <p class="lede">Eczema (atopic dermatitis) is common and chronic—but it doesn’t look the same on every skin tone. TONO helps clinicians see how inflammation, texture, and distribution vary across tones and severities.</p>
+          <div class="icon-list" aria-label="Why representation matters">
+            <div class="icon-item">
+              <div class="icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1f2473" stroke-width="2"><path d="M12 20l9-16H3z"/></svg>
+              </div>
+              <div>
+                <strong>See the spectrum</strong>
+                <div class="muted">Compare the same condition across light, medium, olive, and dark skin.</div>
+              </div>
+            </div>
+            <div class="icon-item">
+              <div class="icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1f2473" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+              </div>
+              <div>
+                <strong>Reduce bias</strong>
+                <div class="muted">Avoid underdiagnosis in richly pigmented skin where redness is subtle.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="hero-image"><span>Hero: eczema across tones (mild→severe)</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Representation Matters (from your content) -->
+    <section class="panel">
+      <h2>Why Representation Matters</h2>
+      <p class="muted">Signs of inflammation can present as <strong>violet</strong>, <strong>gray</strong>, or <strong>ashen</strong>—or be hard to detect—in darker skin tones. Consistent, inclusive visuals help clinicians distinguish active disease from post‑inflammatory pigment changes.</p>
+      <div class="hero-image" style="height:160px"><span>Same condition across light • medium • deep</span></div>
+    </section>
+
+    <!-- Clinical Features Glossary (accordion) -->
+    <section class="panel">
+      <h2>Clinical Features to Look For</h2>
+      <p class="muted">Presentations vary with age, chronicity, severity, and tone. Expand items for quick definitions.</p>
+      <div class="accordion" id="glossary">
+        <!-- Erythema -->
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false">
+            <span>Erythema</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="acc-content"><div class="acc-body">Redness from inflammation. In darker skin, it may appear violet, gray, or be difficult to see—rely on texture and warmth.</div></div>
+        </div>
+        <!-- Lichenification -->
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false">
+            <span>Lichenification</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="acc-content"><div class="acc-body">Thickened, leathery skin from chronic scratching; lines are accentuated and areas may be hyperpigmented.</div></div>
+        </div>
+        <!-- Excoriation -->
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false">
+            <span>Excoriation</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="acc-content"><div class="acc-body">Surface scratches or erosions due to itching. Look for linear marks, crusting, and tenderness.</div></div>
+        </div>
+        <!-- Xerosis -->
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false">
+            <span>Xerosis</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="acc-content"><div class="acc-body">Dry, flaky skin; often appears ashy or whitish on richly pigmented skin.</div></div>
+        </div>
+        <!-- Hyperpigmentation -->
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false">
+            <span>Hyperpigmentation</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="acc-content"><div class="acc-body">Darker patches following inflammation; common in medium and deep tones.</div></div>
+        </div>
+        <!-- Hypopigmentation -->
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false">
+            <span>Hypopigmentation</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="acc-content"><div class="acc-body">Lighter areas after inflammation; edges may be ill‑defined early and sharpen over time.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feature thumbnails with modals -->
+    <section class="panel">
+      <h2>Feature Examples</h2>
+      <div class="thumbnail-row">
+        <!-- Lichenification -->
+        <div class="clickable-image">
+          <img src="images/placeholder-lichenification.jpg" alt="Lichenification example" onclick="openModal('lichenification')"/>
+          <p class="caption">Click to enlarge</p>
+        </div>
+        <div id="lichenification-modal" class="image-modal" role="dialog" aria-modal="true" aria-label="Lichenification example">
+          <div class="modal-content">
+            <div class="modal-head"><strong style="color:#1f2473">Lichenification</strong><span class="close" onclick="closeModal('lichenification')">×</span></div>
+            <div class="modal-img">
+              <img src="../images/eczema/atopic/atopic-face-neck-light-moderate.png" alt="Lichenification close-up" />
+              <p class="muted" style="margin:8px 0 0"><strong>Lichenification:</strong> Thickened, leathery skin caused by repeated scratching; often hyperpigmented.</p>
+            </div>
+          </div>
+        </div>
+        <!-- Xerosis -->
+        <div class="clickable-image">
+          <img src="images/placeholder-xerosis.jpg" alt="Xerosis example" onclick="openModal('xerosis')"/>
+          <p class="caption">Click to enlarge</p>
+        </div>
+        <div id="xerosis-modal" class="image-modal" role="dialog" aria-modal="true" aria-label="Xerosis example">
+          <div class="modal-content">
+            <div class="modal-head"><strong style="color:#1f2473">Xerosis</strong><span class="close" onclick="closeModal('xerosis')">×</span></div>
+            <div class="modal-img">
+              <img src="images/placeholder-xerosis.jpg" alt="Xerosis close-up" />
+              <p class="muted" style="margin:8px 0 0"><strong>Xerosis:</strong> Extremely dry, flaky skin that can appear ashy/white on darker tones.</p>
+            </div>
+          </div>
+        </div>
+        <!-- Hyperpigmentation -->
+        <div class="clickable-image">
+          <img src="images/placeholder-hyperpigmentation.jpg" alt="Hyperpigmentation example" onclick="openModal('hyperpigmentation')"/>
+          <p class="caption">Click to enlarge</p>
+        </div>
+        <div id="hyperpigmentation-modal" class="image-modal" role="dialog" aria-modal="true" aria-label="Hyperpigmentation example">
+          <div class="modal-content">
+            <div class="modal-head"><strong style="color:#1f2473">Hyperpigmentation</strong><span class="close" onclick="closeModal('hyperpigmentation')">×</span></div>
+            <div class="modal-img">
+              <img src="images/placeholder-hyperpigmentation.jpg" alt="Hyperpigmentation close-up" />
+              <p class="muted" style="margin:8px 0 0"><strong>Hyperpigmentation:</strong> Darkened patches left after inflammation heals; common in medium/deep tones.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skin tone bullets + examples -->
+    <section class="panel">
+      <h2>Eczema in Different Skin Tones</h2>
+      <ul>
+        <li><strong>Light skin:</strong> Red, scaly patches are usually prominent.</li>
+        <li><strong>Medium skin:</strong> May appear reddish‑brown or dusky with pigment changes.</li>
+        <li><strong>Deep skin:</strong> Inflammation may read as violet/gray or be subtle; texture cues matter.</li>
+      </ul>
+      <div class="grid cols-3" style="margin-top:8px">
+        <div class="hero-image" style="height:120px"><span>Light skin example</span></div>
+        <div class="hero-image" style="height:120px"><span>Medium skin example</span></div>
+        <div class="hero-image" style="height:120px"><span>Deep skin example</span></div>
+      </div>
+    </section>
+
+    <!-- What TONO offers + deep links -->
+    <section class="panel">
+      <h2>What TONO Offers</h2>
+      <ul>
+        <li>Visual atlas of eczema on diverse skin</li>
+        <li>Severity comparisons from mild to severe</li>
+        <li>Clear, consistent views by body region</li>
+        <li>Side‑by‑side comparison tool</li>
+      </ul>
+      <div class="links-grid">
+        <a href="../pages/viewer.html" class="link-card"><h3>Eczema Visualizer</h3><p>Browse by type, region, tone, severity.</p></a>
+        <a href="../pages/compare.html" class="link-card"><h3>Comparison Tool</h3><p>Direct comparisons across tones and severities.</p></a>
+        <a href="../pages/resources.html" class="link-card"><h3>Resources</h3><p>Guidelines, organizations, videos (clinician‑oriented).</p></a>
+      </div>
+    </section>
+
+    <!-- Disclaimer -->
+    <section class="panel">
+      <h2>Disclaimer</h2>
+      <p class="muted">This tool is for educational purposes. It supports—not replaces—clinical judgment. For medical concerns, consult a qualified healthcare provider.</p>
+    </section>
+  </div>
+
+  <div class="back-to-top"><a href="#">Back to top ▲</a></div>
+
+  <footer style="margin:40px auto; text-align:center; font-size:14px; color:#6b7280">
+    <p>© 2025 TONO — Created at the University of Toronto MScBMC program</p>
+  </footer>
+
+  <script>
+    // Menu toggle
+    const menu = document.getElementById('fullScreenMenu');
+    const icon = document.getElementById('menuIcon');
+    function toggleMenu(){ const on = menu.style.display !== 'flex'; menu.style.display = on ? 'flex' : 'none'; menu.setAttribute('aria-hidden', String(!on)); }
+    icon?.addEventListener('click', toggleMenu);
+    icon?.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); toggleMenu(); }});
+
+    // Accordion behavior
+    document.querySelectorAll('.acc-trigger').forEach(tr => tr.addEventListener('click', () => {
+      const item = tr.closest('.acc-item');
+      const open = item.classList.toggle('open');
+      tr.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }));
+
+    // Modals
+    function openModal(id){ document.getElementById(id+'-modal').style.display='block'; }
+    function closeModal(id){ document.getElementById(id+'-modal').style.display='none'; }
+    window.openModal=openModal; window.closeModal=closeModal;
+
+    // Close on outside click / escape
+    window.addEventListener('click', (e)=>{ document.querySelectorAll('.image-modal').forEach(m=>{ if(e.target===m){ m.style.display='none'; }}); });
+    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ document.querySelectorAll('.image-modal').forEach(m=> m.style.display='none'); }});
+  </script>
+</body>
+</html>

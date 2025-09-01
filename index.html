@@ -1,67 +1,87 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tono - Eczema Atlas</title>
-    <link rel="stylesheet" href="styles/style.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tono Landing Page</title>
+  <link rel="stylesheet" href="styles.css/main.css">
+  <link rel="stylesheet" href="styles.css/index.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
 </head>
-<body id="main-body">
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="#" class="logo">Tono</a>
-            <label for="menu-toggle" class="menu-icon">
-                <span></span>
-                <span></span>
-                <span></span>
-            </label>
-            <ul class="nav-menu">
-                <li><a href="pages/compare.html">Home</a></li>
-                <li><a href="pages/visualizer.html">Visualizer</a></li>
-                <li><a href="pages/gallery.html">Gallery</a></li>
-                <li><a href="pages/learn.html">Learn</a></li>
-                <li><a href="pages/resources.html">Resources</a></li>
-                <li><a href="pages/about.html">About</a></li>
-            </ul>
-        </div>
-    </nav>
 
-    <header class="hero-section">
-        <h1>Welcome to Tono!</h1>
-        <p>An interactive pocket-sized atlas, specializing in eczema.</p>
-        <p><strong>Tono</strong> is an online tool designed for <strong>primary care providers</strong> to explore different types of eczema across various <strong>skin tones</strong> and <strong>severity levels</strong>.</p>
-        <div class="visualizer-animation">Animation of Visualizer being used</div>
-        <button class="primary-btn">Jump to Eczema Visualizer</button>
-        <button class="secondary-btn">Tutorial</button>
-    </header>
 
-    <section class="info-section">
-        <div class="info-card">
-            <div class="placeholder">Image gallery</div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
-        <div class="info-card">
-            <div class="placeholder">Learn About Eczema</div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
-        <div class="info-card">
-            <div class="placeholder">Resources</div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
-    </section>
+<body>
 
-    <footer class="footer">
-        <div class="footer-item">
-            <div class="icon-placeholder"></div>
-            <p>Lorem ipsum</p>
+
+    <header class="white-header">
+        <div class="logo">
+            <img src="images/logo.png" alt= "Tono Logo">
         </div>
-        <div class="footer-item">
-            <p>Lorem ipsum</p>
-            <p>Lorem ipsum</p>
-            <p>Lorem ipsum</p>
+        <div class="menu-icon" id="menuIcon">
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
-    </footer>
+      </header>
+      
+      <!-- Full Screen Menu -->
+      <div id="fullScreenMenu" class="full-screen-menu">
+        <nav>
+          <a href="index.html">Home</a>
+          <a href="pages/viewer.html">Eczema Visualizer</a>
+          <a href="pages/learn.html">Learn About Eczema</a>
+          <a href="pages/resources.html">Resources</a>
+          <a href="pages/about.html">About Us</a>
+          <a href="pages/gallery.html">Image Gallery</a>
+        </nav>
+      </div>
+      
+
+<!-- Carousel Section -->
+<section class="carousel">
+  <div class="slides">
+    <div class="slide active">Welcome to Tono!</div>
+    <div class="slide">About Tono</div>
+    <div class="slide">How to use the Visualizer</div>
+  </div>
+  <div class="dots">
+    <span class="dot active" data-slide="0"></span>
+    <span class="dot" data-slide="1"></span>
+    <span class="dot" data-slide="2"></span>
+  </div>
+  <button class="jump-btn">Jump to Eczema Visualizer</button>
+</section>
+
+<!-- Info Sections -->
+<section class="info">
+  <div class="card">
+    <div class="card-image">Image gallery</div>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+  </div>
+  <div class="card">
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    <div class="card-image">Learn About Eczema</div>
+  </div>
+  <div class="card">
+    <div class="card-image">Resources</div>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+  </div>
+</section>
+
+<!-- Back to Top -->
+<div class="back-to-top">
+  <a href="#">Back to top &#x25B2;</a>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-item">Lorem ipsum</div>
+  <div class="footer-item">Lorem ipsum</div>
+  <div class="footer-item">Lorem ipsum</div>
+</footer>
+
+<script src="script.js/main.js"></script>
 </body>
 </html>

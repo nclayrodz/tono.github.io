@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eczema Visualizer + Comparison</title>
+  <link rel="stylesheet" href="../styles.css/main.css">
+  <link rel="stylesheet" href="../styles.css/viewer.css">
+  <style>
+    .comparison-mode {
+      display: none;
+      margin-top: 2rem;
+    }
+    .comparison-container {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3/2;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .comparison-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    #imageA {
+      z-index: 1;
+    }
+    #imageB {
+      z-index: 2;
+      clip-path: inset(0 50% 0 0);
+    }
+    .slider-handle {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 4px;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 3;
+    }
+    .slider-handle::after {
+      content: '';
+      width: 24px;
+      height: 24px;
+      background: white;
+      border: 3px solid black;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .remove-comparison-btn {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background: black;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<header class="white-header">
+  <div class="logo">
+    <a href="../index.html"><img src="../images/logo.png" alt="Tono Logo"></a>
+  </div>
+</header>
+
+<section class="visualizer" id="mainViewer">
+  <h2>Eczema Visualizer</h2>
+  <p>Select the type of eczema you would like to view</p>
+
+  <div class="image-area">
+    <img src="../images/eczema-images/placeholder.png" alt="Visualizer Image" id="visualizerImage" class="main-image">
+    <button class="compare-access-btn" onclick="toggleComparison()">Compare</button>
+  </div>
+</section>
+
+<section id="comparisonMode" class="comparison-mode">
+  <div class="comparison-container" id="comparisonContainer">
+    <img id="imageA" src="../images/eczema-images/atopic-face-neck-light-mild.jpg" alt="Image A">
+    <img id="imageB" src="../images/eczema-images/atopic-face-neck-medium-mild.jpg" alt="Image B">
+    <div class="slider-handle" id="sliderHandle"></div>
+  </div>
+  <button class="remove-comparison-btn" onclick="toggleComparison(false)">Remove Comparison</button>
+</section>
+
+<script>
+function toggleComparison(show = true) {
+  const viewer = document.getElementById('mainViewer');
+  const comparison = document.getElementById('comparisonMode');
+  viewer.style.display = show ? 'none' : 'block';
+  comparison.style.display = show ? 'block' : 'none';
+}
+
+window.onload = function () {
+  const sliderHandle = document.getElementById("sliderHandle");
+  const imageB = document.getElementById("imageB");
+  const comparisonContainer = document.getElementById("comparisonContainer");
+
+  let dragging = false;
+
+  sliderHandle.addEventListener("mousedown", () => dragging = true);
+  window.addEventListener("mouseup", () => dragging = false);
+  window.addEventListener("mousemove", (e) => {
+    if (!dragging) return;
+    const rect = comparisonContainer.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const percent = Math.max(0, Math.min(100, (x / rect.width) * 100));
+    imageB.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
+    sliderHandle.style.left = `${percent}%`;
+  });
+};
+</script>
+
+</body>
+</html>

@@ -1,0 +1,206 @@
+ /*Comparison Tool*/
+  /* compare.css */
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background-color: #f9f9f9;
+  }
+  
+  .comparison-container {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .comparison-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .comparison-wrapper {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+  
+  .comparison-left,
+  .comparison-right {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    overflow: hidden;
+    width: 100%;
+  }
+  
+  .comparison-left {
+    left: 0;
+    z-index: 2;
+  }
+  
+  .comparison-right {
+    z-index: 1;
+  }
+  
+  .comparison-left img,
+  .comparison-right img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  
+  .slider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 4px;
+    background: #555;
+    z-index: 3;
+    cursor: ew-resize;
+  }
+  
+  .edit-button {
+    position: absolute;
+    top: 10px;
+    padding: 8px 12px;
+    font-size: 14px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 4;
+    transition: background-color 0.2s ease;
+  }
+  
+  .edit-button:hover {
+    background-color: #eee;
+  }
+  
+  .edit-left {
+    left: 10px;
+  }
+  
+  .edit-right {
+    right: 10px;
+  }
+  
+  /*Comparison page*/
+  .current-condition {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 16px;
+  }
+  
+  .comparison-container {
+    position: relative;
+    max-width: 380px;
+    margin: 0 auto;
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: #ddd;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .comparison-left,
+  .comparison-right {
+    position: relative;
+  }
+  
+  .edit-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 6px 12px;
+    font-size: 14px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+    z-index: 2;
+  }
+  
+  .comparison-right .edit-button {
+    left: auto;
+    right: 10px;
+  }
+  
+  .comparison-container {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .comparison-image-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 16px;
+  }
+  
+  .comparison-image {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  
+  .comparison-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%; /* start by revealing half */
+    overflow: hidden;
+    clip-path: inset(0 50% 0 0); /* only show left half */
+  }
+  
+  .slider-handle {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 4px;
+    height: 100%;
+    background-color: black;
+    cursor: ew-resize;
+    z-index: 5;
+  }
+  
+  /* Skin Tone & Severity Selectors */
+  
+  .selector-label {
+    font-weight: 600;
+    margin: 24px 0 8px;
+    font-size: 0.9rem;
+    color: #2e1e72;
+  }
+  
+  .selector-group {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  
+  .selector-group button {
+    border: 1.5px solid #2e1e72;
+    border-radius: 16px;
+    padding: 6px 16px;
+    background: white;
+    font-size: 0.9rem;
+    color: #2e1e72;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  .selector-group button.active,
+  .selector-group button:hover {
+    background-color: #e0d7f8;
+  }
+  

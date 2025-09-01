@@ -1,0 +1,59 @@
+
+  /* Resources Page */
+  .resources-section {
+    width: 90%;
+    max-width: 600px;
+    margin: 2rem auto;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .resources-section h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #2E2E8B;
+  }
+  
+  .resources-section p {
+    margin-bottom: 2rem;
+    color: #2E2E8B;
+    line-height: 1.6;
+    text-align: center;
+  }
+  
+  .resource-main {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .resource-main img {
+    width: 80%;
+    max-width: 400px;
+    border-radius: 8px;
+  }
+  
+  .resource-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+  }
+  
+  .resource-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 90%;
+  }
+  
+  .resource-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
+  .resource-item p {
+    font-size: 0.9rem;
+    color: #2E2E8B;
+    font-weight: 600;
+  }

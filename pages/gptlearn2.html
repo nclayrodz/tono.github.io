@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>TONO • Learning</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      /* Match compare.html tokens */
+      --ink:#1f2473;         /* TONO deep indigo */
+      --ink-2:#353bb3;
+      --bg:#f2f4fb;          /* light page BG */
+      --card:#ffffff;        /* card/panel */
+      --muted:#6b7280;       /* subdued text */
+      --ring:#7a86ff;        /* focus ring */
+      --shadow:0 8px 24px rgba(31,36,115,.12);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background:var(--bg); color:#0f172a;
+    }
+
+    /* ===== Header borrowed from compare aesthetic ===== */
+    header.white-header{position:sticky; top:0; z-index:50; background:#fff; border-bottom:1px solid #e5e7eb}
+    header.white-header .logo{display:flex; align-items:center; gap:10px; padding:10px 16px}
+    header.white-header img{height:34px}
+    .menu-icon{margin-left:auto; margin-right:12px; width:28px; height:20px; display:grid; align-content:space-between; cursor:pointer}
+    .menu-icon span{display:block; height:2px; background:#111827; border-radius:2px}
+    .full-screen-menu{position:fixed; inset:0; background:rgba(255,255,255,.98); display:none; align-items:center; justify-content:center}
+    .full-screen-menu nav{display:grid; gap:18px; text-align:center}
+    .full-screen-menu a{color:#111827; font-weight:800; text-decoration:none}
+
+    /* ===== Page layout ===== */
+    .wrap{max-width:1100px; margin:28px auto 40px; padding:0 16px}
+    h1{font-size:26px; color:var(--ink); margin:8px 0 8px}
+    .lede{max-width:680px; line-height:1.6; color:#334155; margin:0 0 14px}
+    .grid{display:grid; gap:20px}
+    .grid.cols-2{grid-template-columns:1.15fr .85fr}
+    @media (max-width: 980px){ .grid.cols-2{grid-template-columns:1fr} }
+
+    .panel{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:16px; border:1px solid #e5e7eb}
+    .panel h2{margin:0 0 8px; color:var(--ink)}
+    .card{background:var(--card); border:1px solid #e5e7eb; border-radius:var(--radius); padding:12px}
+    .card h3{margin:0 0 8px; color:var(--ink); font-size:14px}
+    .muted{color:var(--muted)}
+
+    /* ===== Compare-style controls ===== */
+    .seg{border:1px solid #d1d5db; background:#f8fafc; color:#1f2937; padding:8px 12px; border-radius:999px; cursor:pointer; font-weight:600}
+    .seg[aria-pressed="true"]{background:var(--ink); color:#fff; border-color:var(--ink); box-shadow:0 0 0 3px rgba(122,134,255,.25)}
+
+    .pill{border:1px solid #c7cbe1; padding:8px 12px; border-radius:999px; cursor:pointer; font-weight:600; background:#f8f9ff}
+    .pill[aria-pressed="true"]{background:var(--ink); color:#fff; border-color:var(--ink); box-shadow:0 0 0 3px rgba(122,134,255,.25)}
+
+    .sw{width:52px; height:36px; border-radius:10px; border:2px solid #e5e7eb; cursor:pointer; position:relative}
+    .sw[aria-pressed="true"]{outline:3px solid var(--ring)}
+    .sw[data-tone="light"] {background:#f5e3d3}
+    .sw[data-tone="medium"]{background:#d5a98b}
+    .sw[data-tone="olive"] {background:#b5835a}
+    .sw[data-tone="dark"]  {background:#6a4a3a}
+    .sw span{position:absolute; inset:auto 6px 4px auto; font-size:10px; color:#0f172a66}
+
+    /* ===== Reading progress (top) ===== */
+    .reading-progress{position:fixed; inset:0 0 auto 0; height:4px; background:linear-gradient(90deg, var(--ink), #b3b8ff); transform-origin:0 50%; transform:scaleX(0); z-index:60}
+
+    /* ===== TOC Sidebar ===== */
+    .layout{display:grid; grid-template-columns:260px 1fr; gap:20px}
+    @media (max-width: 980px){ .layout{grid-template-columns:1fr} }
+    .toc{position:sticky; top:72px; align-self:start}
+    .toc .card{padding:10px}
+    .toc a{display:block; padding:8px 10px; border-radius:10px; color:#334155; text-decoration:none}
+    .toc a.active{background:#eef2ff; color:var(--ink); font-weight:700}
+
+    /* ===== Image tray ===== */
+    .tray{display:grid; grid-template-columns:repeat(4,1fr); gap:8px}
+    .thumb{aspect-ratio:1/1; border-radius:12px; background:linear-gradient(180deg,#eef2ff,#e9d5ff); border:1px solid #e5e7eb; display:grid; place-items:center; font-size:12px; color:#1f2473}
+    @media (max-width:740px){.tray{grid-template-columns:repeat(2,1fr)}}
+
+    /* ===== Accordion ===== */
+    .accordion{border:1px solid #e5e7eb; border-radius:14px; overflow:hidden}
+    .acc-item + .acc-item{border-top:1px solid #e5e7eb}
+    .acc-trigger{width:100%; text-align:left; background:#f8fafc; color:#111827; padding:14px 16px; border:0; cursor:pointer; font-weight:800; display:flex; align-items:center; justify-content:space-between}
+    .acc-content{max-height:0; overflow:hidden; transition:max-height .3s ease}
+    .acc-item.open .acc-content{max-height:600px}
+
+    /* ===== Quiz ===== */
+    .quiz{display:grid; gap:10px}
+    .opt{display:flex; gap:10px; padding:12px; border:1px solid #e5e7eb; border-radius:12px; cursor:pointer; align-items:flex-start; background:#fff}
+    .opt:hover{background:#f8fafc}
+    .opt[data-state="correct"]{background:#e8f9ef; border-color:#86efac}
+    .opt[data-state="wrong"]{background:#ffe8e8; border-color:#fecaca}
+    .progress{height:10px; background:#e5e7eb; border-radius:999px; overflow:hidden}
+    .progress>span{display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--ink),#b3b8ff); transition:width .35s ease}
+
+    .badge{display:inline-block; padding:.25rem .5rem; border-radius:999px; background:#eef2ff; color:#1f2473; font-weight:700}
+  </style>
+</head>
+<body>
+  <div class="reading-progress" id="readingProgress"></div>
+
+  <!-- Header (same structure as compare.html) -->
+  <header class="white-header">
+    <div class="logo">
+      <a href="../index.html"><img src="../images/logo.png" alt="Tono Logo"></a>
+      <div class="menu-icon" id="menuIcon" aria-label="Open menu" role="button" tabindex="0">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </header>
+  <div id="fullScreenMenu" class="full-screen-menu" aria-hidden="true">
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../pages/viewer.html">Eczema Visualizer</a>
+      <a href="../learn.html">Learn About Eczema</a>
+      <a href="../pages/resources.html">Resources</a>
+      <a href="../pages/about.html">About Us</a>
+      <a href="../pages/gallery.html">Image Gallery</a>
+    </nav>
+  </div>
+
+  <div class="wrap">
+    <h1>Learning Module</h1>
+    <p class="lede">Built to mirror the clean, professional look of your Compare tool: light background, indigo accents, rounded cards, and the same control language (segmented toggles, pills, and swatches). It’s dense enough to never feel empty, but still scannable.</p>
+
+    <div class="layout">
+      <!-- Sidebar TOC -->
+      <aside class="toc">
+        <div class="card">
+          <a href="#overview" class="active">Overview</a>
+          <a href="#recognition">Recognition across tones</a>
+          <a href="#patterns">Common patterns</a>
+          <a href="#practice">Try it</a>
+          <a href="#quiz">Quick quiz</a>
+          <a href="#refs">References</a>
+        </div>
+      </aside>
+
+      <!-- Main -->
+      <div class="grid" style="gap:16px">
+        <!-- Overview -->
+        <section id="overview" class="panel" tabindex="-1">
+          <h2>Recognizing eczema across skin tones</h2>
+          <p class="muted">Key visual cues, distribution patterns, and pitfalls—organized for quick scanning and short study sessions.</p>
+          <div class="grid cols-2">
+            <div class="card">
+              <h3>Goals</h3>
+              <ul>
+                <li>Differentiate erythema by tone</li>
+                <li>Spot regional distribution</li>
+                <li>Avoid misreads (PIH vs active flare)</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Resources</h3>
+              <div style="display:flex; gap:8px; flex-wrap:wrap">
+                <button class="pill" aria-pressed="false">Styleguide</button>
+                <button class="pill" aria-pressed="false">Viewer</button>
+                <button class="pill" aria-pressed="false">Compare</button>
+                <button class="pill" aria-pressed="false">Gallery</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Recognition -->
+        <section id="recognition" class="panel" tabindex="-1">
+          <h2>How features shift by skin tone</h2>
+          <p class="muted">Toggle tone, severity, and region; the tray updates so learners can scan variations quickly.</p>
+          <div class="grid cols-2">
+            <div class="card">
+              <h3>Toggles</h3>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px">
+                <div>
+                  <div class="muted" style="font-size:12px; text-transform:uppercase; letter-spacing:.1em">Tone</div>
+                  <div id="toneRow" style="display:flex; gap:8px; flex-wrap:wrap"></div>
+                </div>
+                <div>
+                  <div class="muted" style="font-size:12px; text-transform:uppercase; letter-spacing:.1em">Severity</div>
+                  <div id="sevRow" style="display:flex; gap:8px; flex-wrap:wrap"></div>
+                </div>
+                <div>
+                  <div class="muted" style="font-size:12px; text-transform:uppercase; letter-spacing:.1em">Region</div>
+                  <div id="regionRow" style="display:flex; gap:8px; flex-wrap:wrap"></div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <h3>Updated examples</h3>
+              <div class="tray" id="tray"></div>
+              <p class="muted" style="margin-top:8px">Tip: When redness is subtle on darker skin, rely on texture/lichenification.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Patterns -->
+        <section id="patterns" class="panel" tabindex="-1">
+          <h2>Common regional patterns</h2>
+          <div class="accordion" id="acc">
+            <div class="acc-item">
+              <button class="acc-trigger" aria-expanded="false">Atopic • face‑neck</button>
+              <div class="acc-content">
+                <div class="card" style="margin:12px">
+                  <p>Periorbital/perioral involvement; cheeks in infants. In darker tones erythema may look violaceous—use texture.</p>
+                </div>
+              </div>
+            </div>
+            <div class="acc-item">
+              <button class="acc-trigger" aria-expanded="false">Atopic • flexural‑fold (elbow)</button>
+              <div class="acc-content">
+                <div class="card" style="margin:12px">
+                  <p>Pruritic patches in antecubital fossae; chronic rubbing → lichenification. Consider contact triggers in adults.</p>
+                </div>
+              </div>
+            </div>
+            <div class="acc-item">
+              <button class="acc-trigger" aria-expanded="false">Seborrheic • scalp / face</button>
+              <div class="acc-content">
+                <div class="card" style="margin:12px">
+                  <p>Greasy scale, subtle base color shift. Check hairline and retroauricular folds.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Try it (hooks to getImagePath) -->
+        <section id="practice" class="panel" tabindex="-1">
+          <h2>Try it with TONO assets</h2>
+          <div class="grid cols-2">
+            <div class="card">
+              <h3>Pick a combo</h3>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px">
+                <div>
+                  <div class="muted" style="font-size:12px; text-transform:uppercase; letter-spacing:.1em">Type</div>
+                  <div class="row" id="typeRow" style="display:flex; gap:8px; flex-wrap:wrap"></div>
+                </div>
+                <div>
+                  <div class="muted" style="font-size:12px; text-transform:uppercase; letter-spacing:.1em">Tone</div>
+                  <div class="row" id="toneRow2" style="display:flex; gap:8px; flex-wrap:wrap"></div>
+                </div>
+                <div>
+                  <div class="muted" style="font-size:12px; text-transform:uppercase; letter-spacing:.1em">Severity</div>
+                  <div class="row" id="sevRow2" style="display:flex; gap:8px; flex-wrap:wrap"></div>
+                </div>
+                <div>
+                  <div class="muted" style="font-size:12px; text-transform:uppercase; letter-spacing:.1em">Region</div>
+                  <div class="row" id="regionRow2" style="display:flex; gap:8px; flex-wrap:wrap"></div>
+                </div>
+                <button class="seg" id="previewBtn" aria-pressed="false" style="width:max-content">Preview</button>
+              </div>
+            </div>
+            <div class="card" style="min-height:260px; display:grid; place-items:center; position:relative; overflow:hidden">
+              <img id="previewImg" alt="Preview" style="max-width:100%; border-radius:12px; display:none"/>
+              <div id="previewPh" class="pill" aria-pressed="false">Preview will appear here</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Quiz -->
+        <section id="quiz" class="panel" tabindex="-1">
+          <h2>Quick Quiz</h2>
+          <div class="grid" style="grid-template-columns:repeat(3,1fr)">
+            <div class="card">
+              <h3>On darker skin tones, erythema may appear…</h3>
+              <div class="quiz" data-qid="q1" data-answer="b">
+                <div class="opt" data-choice="a">Bright red only</div>
+                <div class="opt" data-choice="b">Violet, gray, or ashen</div>
+                <div class="opt" data-choice="c">Greenish</div>
+              </div>
+            </div>
+            <div class="card">
+              <h3>A reliable cue when redness is subtle is…</h3>
+              <div class="quiz" data-qid="q2" data-answer="c">
+                <div class="opt" data-choice="a">Hair color</div>
+                <div class="opt" data-choice="b">Nail length</div>
+                <div class="opt" data-choice="c">Texture / lichenification</div>
+              </div>
+            </div>
+            <div class="card">
+              <h3>Fine white scale on dark skin might be mistaken for…</h3>
+              <div class="quiz" data-qid="q3" data-answer="a">
+                <div class="opt" data-choice="a">Hypopigmentation</div>
+                <div class="opt" data-choice="b">Bruising</div>
+                <div class="opt" data-choice="c">Tattoos</div>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="margin-top:12px; display:flex; align-items:center; gap:14px">
+            <div class="progress" style="flex:1"><span id="quizBar"></span></div>
+            <div class="pill" id="quizScore">Score: 0/3</div>
+            <button class="seg" id="resetQuiz" aria-pressed="false">Reset</button>
+          </div>
+        </section>
+
+        <!-- References -->
+        <section id="refs" class="panel" tabindex="-1">
+          <h2>References & Credits</h2>
+          <div class="grid" style="grid-template-columns:1fr 1fr">
+            <div class="card"><h3>Inclusive dermatology</h3><p class="muted">Core sources informing TONO visuals and copy.</p></div>
+            <div class="card"><h3>Credits</h3><p class="muted">Illustrations, UI, and copy © Naomi Clay. Educational framing via TONO Learning.</p></div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // === Reading progress ===
+    const prog = document.getElementById('readingProgress');
+    document.addEventListener('scroll', () => {
+      const h = document.documentElement;
+      const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+      prog.style.transform = `scaleX(${Math.min(1, scrolled)})`;
+    }, {passive:true});
+
+    // === Simple menu toggle (structurally matches compare header) ===
+    const menu = document.getElementById('fullScreenMenu');
+    const icon = document.getElementById('menuIcon');
+    function toggleMenu(){ const on = menu.style.display !== 'flex'; menu.style.display = on ? 'flex' : 'none'; menu.setAttribute('aria-hidden', String(!on)); }
+    icon?.addEventListener('click', toggleMenu);
+    icon?.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); toggleMenu(); }});
+
+    // === Scrollspy for TOC ===
+    const tocLinks = [...document.querySelectorAll('.toc a')];
+    const sections = tocLinks.map(a => document.querySelector(a.getAttribute('href')));
+    const spy = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if(e.isIntersecting){
+          const id = '#' + e.target.id;
+          tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === id));
+        }
+      });
+    }, {rootMargin:'-40% 0px -55% 0px', threshold:0});
+    sections.forEach(s => s && spy.observe(s));
+
+    // === Controls: same language as compare (swatches + pills) ===
+    const TONES = ['light','medium','olive','dark'];
+    const SEVERITIES = ['normal','mild','moderate','severe'];
+    const REGIONS = ['face-neck','flexural-fold-elbow','hand','scalp','wrists','legs','palms'];
+    const TYPES = ['atopic','contact','seborrheic','stasis','neuro','nummular','dyshidrotic'];
+
+    function titleCase(s){ return s.replace(/(^|[-_])/g,' ').replace(/\b\w/g,c=>c.toUpperCase()).trim() }
+
+    // Recognition controls
+    const toneRow = document.getElementById('toneRow');
+    const sevRow = document.getElementById('sevRow');
+    const regionRow = document.getElementById('regionRow');
+    const tray = document.getElementById('tray');
+    let tone='light', severity='mild', region='face-neck';
+
+    function renderSwatches(row, value, set){
+      row.innerHTML='';
+      TONES.forEach(t=>{
+        const b=document.createElement('button'); b.className='sw'; b.dataset.tone=t; b.innerHTML=`<span>${t}</span>`; b.setAttribute('aria-pressed', String(t===value));
+        b.addEventListener('click', ()=>{ set(t); });
+        row.appendChild(b);
+      });
+    }
+    function renderSev(row, value, set){
+      row.innerHTML='';
+      SEVERITIES.forEach(s=>{ const b=document.createElement('button'); b.className='pill'; b.textContent=titleCase(s); b.setAttribute('aria-pressed', String(s===value)); b.addEventListener('click', ()=>set(s)); row.appendChild(b); });
+    }
+    function renderRegion(row, value, set){
+      row.innerHTML='';
+      REGIONS.forEach(r=>{ const b=document.createElement('button'); b.className='pill'; b.textContent=titleCase(r); b.setAttribute('aria-pressed', String(r===value)); b.addEventListener('click', ()=>set(r)); row.appendChild(b); });
+    }
+    function updateTray(){
+      tray.innerHTML='';
+      for(let i=0;i<4;i++){
+        const d=document.createElement('div'); d.className='thumb'; d.textContent=`${region} • ${tone} • ${severity} • ex ${i+1}`; tray.appendChild(d);
+      }
+    }
+    function setTone(v){ tone=v; renderSwatches(toneRow,tone,setTone); updateTray(); }
+    function setSev(v){ severity=v; renderSev(sevRow,severity,setSev); updateTray(); }
+    function setRegion(v){ region=v; renderRegion(regionRow,region,setRegion); updateTray(); }
+    setTone(tone); setSev(severity); setRegion(region);
+
+    // Try-it playground
+    const typeRow = document.getElementById('typeRow');
+    const toneRow2 = document.getElementById('toneRow2');
+    const sevRow2 = document.getElementById('sevRow2');
+    const regionRow2 = document.getElementById('regionRow2');
+    const previewBtn = document.getElementById('previewBtn');
+    const previewImg = document.getElementById('previewImg');
+    const previewPh  = document.getElementById('previewPh');
+
+    let T='atopic', R='face-neck', O='light', S='mild';
+
+    function renderTypes(){ typeRow.innerHTML=''; TYPES.forEach(tp=>{ const b=document.createElement('button'); b.className='pill'; b.textContent=titleCase(tp); b.setAttribute('aria-pressed', String(tp===T)); b.addEventListener('click', ()=>{T=tp; renderTypes();}); typeRow.appendChild(b); }); }
+    function renderTone2(){ toneRow2.innerHTML=''; TONES.forEach(t=>{ const b=document.createElement('button'); b.className='sw'; b.dataset.tone=t; b.innerHTML=`<span>${t}</span>`; b.setAttribute('aria-pressed', String(t===O)); b.addEventListener('click', ()=>{O=t; renderTone2();}); toneRow2.appendChild(b); }); }
+    function renderSev2(){ sevRow2.innerHTML=''; SEVERITIES.forEach(s=>{ const b=document.createElement('button'); b.className='pill'; b.textContent=titleCase(s); b.setAttribute('aria-pressed', String(s===S)); b.addEventListener('click', ()=>{S=s; renderSev2();}); sevRow2.appendChild(b); }); }
+    function renderRegion2(){ regionRow2.innerHTML=''; REGIONS.forEach(r=>{ const b=document.createElement('button'); b.className='pill'; b.textContent=titleCase(r); b.setAttribute('aria-pressed', String(r===R)); b.addEventListener('click', ()=>{R=r; renderRegion2();}); regionRow2.appendChild(b); }); }
+
+    function placeholder(type, region, tone, severity){
+      const label = `${type} • ${region} • ${tone} • ${severity}`;
+      const svg = encodeURIComponent(
+        `<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='900'>
+          <defs><linearGradient id='g' x1='0' x2='1'><stop stop-color='#c7d2fe'/><stop offset='1' stop-color='#e9d5ff'/></linearGradient></defs>
+          <rect width='100%' height='100%' fill='url(#g)'/>
+          <circle cx='600' cy='450' r='260' fill='rgba(255,255,255,.45)'/>
+          <text x='50%' y='50%' text-anchor='middle' fill='#1f2473' font-size='44' font-family='Inter' dy='10'>${label}</text>
+        </svg>`
+      );
+      return `data:image/svg+xml;utf8,${svg}`;
+    }
+    function resolveURL(type, region, tone, severity){
+      try{ if(typeof getImagePath === 'function'){ return getImagePath({ type, region, tone, severity }); } }catch(e){}
+      return placeholder(type, region, tone, severity);
+    }
+
+    previewBtn.addEventListener('click', ()=>{
+      const src = resolveURL(T,R,O,S);
+      if(src){ previewImg.src=src; previewImg.style.display='block'; previewPh.style.display='none'; }
+    });
+
+    renderTypes(); renderTone2(); renderSev2(); renderRegion2();
+
+    // Accordion
+    document.querySelectorAll('.acc-trigger').forEach(tr => tr.addEventListener('click', () => {
+      const item = tr.closest('.acc-item');
+      const open = item.classList.toggle('open');
+      tr.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }));
+
+    // Quiz logic
+    const quizState = { answered:new Set(), correct:0 };
+    const quizBar = document.getElementById('quizBar');
+    const quizScore = document.getElementById('quizScore');
+    document.querySelectorAll('.quiz').forEach(block => {
+      block.addEventListener('click', e => {
+        const opt = e.target.closest('.opt'); if(!opt) return;
+        const qid = block.dataset.qid; if(quizState.answered.has(qid)) return;
+        const answer = block.dataset.answer; const isCorrect = opt.dataset.choice === answer;
+        opt.dataset.state = isCorrect ? 'correct' : 'wrong';
+        if(!isCorrect){ [...block.querySelectorAll('.opt')].forEach(o => { if(o.dataset.choice===answer) o.dataset.state = 'correct'; }); }
+        quizState.answered.add(qid); if(isCorrect) quizState.correct++;
+        const pct = (quizState.answered.size/3)*100; quizBar.style.width = pct + '%';
+        quizScore.textContent = `Score: ${quizState.correct}/3`;
+      });
+    });
+    document.getElementById('resetQuiz').addEventListener('click', ()=>{
+      quizState.answered.clear(); quizState.correct=0;
+      document.querySelectorAll('.quiz .opt').forEach(o => {o.removeAttribute('data-state');});
+      quizBar.style.width='0%'; quizScore.textContent='Score: 0/3';
+    });
+  </script>
+</body>
+</html>

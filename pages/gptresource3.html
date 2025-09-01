@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>TONO • Resources</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../styles.css/main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#1f2473;
+      --bg:#f2f4fb;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:Inter,system-ui; background:var(--bg); color:#0f172a}
+
+    header.white-header{position:sticky; top:0; z-index:50; background:#fff; border-bottom:1px solid #e5e7eb}
+    header.white-header .logo{display:flex; align-items:center; gap:10px; padding:10px 16px}
+    header.white-header img{height:34px}
+
+    .wrap{max-width:1100px; margin:28px auto 40px; padding:0 16px}
+    h1{font-size:26px; color:var(--ink); margin:8px 0 8px}
+    .lede{max-width:760px; line-height:1.65; color:#334155; margin:0 0 16px}
+
+    .panel{background:var(--card); border-radius:var(--radius); box-shadow:0 8px 24px rgba(31,36,115,.12); padding:16px; border:1px solid #e5e7eb; margin-bottom:20px}
+    .muted{color:var(--muted)}
+
+    .list{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+    @media (max-width: 900px){ .list{grid-template-columns:1fr} }
+    .item{display:grid; gap:6px; background:#fff; border:1px solid #e5e7eb; border-radius:16px; padding:12px}
+    .item .meta{font-size:12px; color:#6b7280}
+    .item a{color:#1f2473; font-weight:700; text-decoration:none}
+    .item a:hover{text-decoration:underline}
+
+    .badge{display:inline-block; padding:.25rem .5rem; border-radius:999px; background:#eef2ff; color:#1f2473; font-weight:700; font-size:12px; margin-left:6px}
+  </style>
+</head>
+<body>
+<header class="white-header">
+  <div class="logo">
+    <a href="../index.html"><img src="../images/logo.png" alt="Tono Logo"></a>
+  </div>
+</header>
+
+<section class="breadcrumb" style="padding:10px 16px">
+  <p style="margin:0; color:#475569">
+    <a href="../index.html" style="color:#1f2473; font-weight:700; text-decoration:none">Home</a>
+    <span style="opacity:.45"> › </span>
+    <span>Resources</span>
+  </p>
+</section>
+
+<div class="wrap">
+  <h1>Resources</h1>
+  <p class="lede">Curated organizations, guidelines, and videos to deepen understanding of eczema across skin tones and severities.</p>
+
+  <div class="panel">
+    <h2>All Resources</h2>
+    <div class="list">
+      <div class="item">
+        <a href="https://www.aad.org/public/diseases/eczema/types/atopic-dermatitis" target="_blank">American Academy of Dermatology — Atopic Dermatitis</a>
+        <div class="meta">Clear patient overview <span class="badge">AAD</span></div>
+      </div>
+      <div class="item">
+        <a href="https://nationaleczema.org/" target="_blank">National Eczema Association — Main Site</a>
+        <div class="meta">Education, support, and resources <span class="badge">NEA</span></div>
+      </div>
+      <div class="item">
+        <a href="https://dermnetnz.org/topics/atopic-dermatitis" target="_blank">DermNet — Atopic Dermatitis Reference</a>
+        <div class="meta">Image‑rich clinical reference <span class="badge">DermNet</span></div>
+      </div>
+      <div class="item">
+        <a href="https://www.nice.org.uk/guidance/cg57" target="_blank">NICE Guideline — Atopic Eczema in Under 12s</a>
+        <div class="meta">Diagnosis and management <span class="badge">NICE</span></div>
+      </div>
+      <div class="item">
+        <a href="https://medlineplus.gov/eczema.html" target="_blank">MedlinePlus — Eczema/Dermatitis</a>
+        <div class="meta">Consumer‑friendly overview <span class="badge">NIH</span></div>
+      </div>
+      <div class="item">
+        <a href="https://www.nhs.uk/conditions/atopic-eczema/" target="_blank">NHS — Atopic Eczema</a>
+        <div class="meta">Treatment and self‑care guidance <span class="badge">NHS</span></div>
+      </div>
+      <div class="item">
+        <a href="https://skinofcolorsociety.org/" target="_blank">Skin of Color Society</a>
+        <div class="meta">Educational resources on dermatology in diverse populations <span class="badge">SOCS</span></div>
+      </div>
+      <div class="item">
+        <a href="https://www.youtube.com/playlist?list=PLBM0qMPbkPa3TTAheNTQqVHliEgJ6ARs3" target="_blank">NEA YouTube — Webinar Wednesdays</a>
+        <div class="meta">Expert webinars and updates <span class="badge">NEA</span></div>
+      </div>
+      <div class="item">
+        <a href="https://www.youtube.com/watch?v=T_HbQo5oWak" target="_blank">AAD YouTube — Eczema Skin Care Tips</a>
+        <div class="meta">Short dermatologist‑led tips <span class="badge">AAD</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
