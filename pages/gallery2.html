@@ -106,6 +106,84 @@
       position:absolute; top:10px; right:10px; width:40px; height:40px; border-radius:10px;
       background:#fff; color:#0f172a; border:1px solid #e5e7eb; display:grid; place-items:center; cursor:pointer; font-weight:900;
     }
+
+    /* ===== MOBILE POLISH ===== */
+@media (max-width: 480px) {
+
+/* 1) Gallery cards/images sit perfectly centered */
+.gallery-grid,
+.image-grid,
+.cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;        /* single column on phones */
+  justify-items: center;             /* center each card */
+  gap: 20px;
+  padding-inline: 16px;              /* keep content off the edges */
+}
+
+.gallery-card,
+.image-card,
+.ecz-card {
+  width: 100%;
+  max-width: 560px;                  /* prevents stretching on tablets */
+  margin-inline: auto;               /* hard-center the card */
+}
+
+.gallery-card img,
+.image-card img,
+.ecz-card img {
+  display: block;
+  margin: 0 auto;                    /* center the image itself */
+  max-width: 100%;
+  height: auto;
+}
+
+/* 2) Skin-tone swatches: add breathing room from the screen edge */
+.tone-row,
+.swatch-row,
+.tone-swatches,
+.skin-tone-swatches {
+  display: flex;
+  gap: 14px;
+  padding-inline: 16px;              /* ← pushes swatches in from the edge */
+  margin-top: 8px;
+  overflow-x: auto;                   /* keeps it usable if many tones */
+}
+
+.tone-swatch,
+.swatch,
+.tone-button {
+  flex: 0 0 auto;                    /* keep their size consistent */
+}
+
+/* 3) Severity buttons: 2×2 layout (two above, two below) */
+.severity-group,
+.severity-buttons,
+.severity-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 14px;                    /* row and column gaps */
+  padding-inline: 16px;              /* align with swatches */
+  margin-top: 8px;
+}
+
+.severity-button,
+.btn-severity,
+.severity-chip {
+  width: 100%;                       /* each fills its grid cell */
+  justify-content: center;
+}
+
+/* Optional: keep “Region” pills consistent too */
+.region-row,
+.region-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-inline: 16px;
+}
+}
+
   </style>
 
   <!-- Load your data BEFORE our script -->
